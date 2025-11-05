@@ -10,7 +10,7 @@
 template <typename Class>
 class Simulator {
     
-    static_assert(std::is_base_of<Simulator<Class>, Class>);
+    static_assert(std::is_base_of_v<Simulator<Class>, Class>);
     
     public:
         template <typename... Args>
