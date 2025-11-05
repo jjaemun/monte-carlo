@@ -8,7 +8,7 @@
 
 
 template <typename Class>
-class Simulator<Class> {
+class Simulator {
     
     static_assert(std::is_base_of<Simulator<Class>, Class>);
     

@@ -20,5 +20,4 @@ constexpr auto reverse(Container&& c) {
 }
     
 
-
 #endif
