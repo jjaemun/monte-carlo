@@ -1,10 +1,8 @@
-#ifndef SIMULATORS_HPP
-#define SIMULATORS_HPP
-
+#ifndef SIMULATOR_HPP
+#define SIMULATOR_HPP
 
 
 #include "utilities.hpp"
-
 
 
 template <typename Class>
