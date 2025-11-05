@@ -7,34 +7,44 @@
 #include "tform.hpp"
 
 
-template <typename Class>
-class Operator : public Transform<Class> {
-
-    public:
-        
-
-
 template <typename T>
-class Shift : {
+class LinearOperator : public Transform<LinearOperator<T>> {
 
     public:
-        Shift(T a) : a(a) {}
-
-        auto forward(Eigen::Array<T>&& M) const {
-            return M + a;
+        LinearOperator(const Eigen::ArrayXX<T> &A) : A(A) {} 
+    
+        auto forward(Eigen::ArrayXX<T> &e) -> Eigen::ArrayXX<T> {
+            return (A.matrix() * e.matrix()).array();
         }
 
-        auto decode(Eigen::Array<T>&& M) const {
-            return M - a;
+        auto backward(Eigen::ArrayXX<T>& e) const -> Eigen::ArrayXX<T> {
+            return A.matrix().fullPivLu().solve(e.matrix()).array();
         }
 
     private:
-        T a;
+        Eigen::ArrayXX<T> A;
+};
+
+template <typename T>
+class AffineOperator : public Transform<AffineOperator<T>> {
+
+    public:
+        AffineOperator(const Eigen::ArrayXX<T> &A, const T &b) : A(A), b(b) {}
+
+        auto forward(Eigen::ArrayXX<T> &e) const -> Eigen::ArrayXX<T> {
+            return (A.matrix() * e.matrix()).array() + b;
+        }
+
+        auto backward(Eigen::ArrayXX<T> &e) const -> Eigen::ArrayXX<T> {
+            return A.matrix().fullPivLu().solve((e - b).matrix()).array();
+        }
+
+    private:
+        Eigen::ArrayXX<T> A;
+        T b;
 };
 
 
-template <typename T>
-class Scale
 
 
 #endif
