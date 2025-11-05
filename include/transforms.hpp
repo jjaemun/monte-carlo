@@ -1,65 +1,40 @@
-#ifndef TRANSFORMS_HPP
-#define TRANSFORMS_HPP
+#ifndef TRANSFORMS_IMPLEMENTATION_HPP 
+#define TRANSFORMS_IMPLEMENTATION_HPP
 
 
-#include <type_traits>
+#include <Eigen/Core>
 
-#include "meta.hpp"
+#include "tform.hpp"
 
 
 template <typename Class>
-class Transform {
-
-    static_assert(std::is_base_of_v<Transform<Class>, Class>);
+class Operator : public Transform<Class> {
 
     public:
-    
-        template <typename T>
-        auto transform(T&& e) const {
-            return down_cast<Class>(*this).forward(std::forward<T>(e));
-        }
-
-        template <typename T>
-        auto inverse_transform(T&& e) const {
-            return down_cast<Class>(*this).backward(std::forward<T>(e));
-        }
-};
+        
 
 
-
-template <typename... Transforms>
-class Composite : public Transform<Composite<Transforms...>> {
-
-    static_assert(pack_size<Transforms...> > 1);
+template <typename T>
+class Shift : {
 
     public:
-        Composite(Transforms&&... tforms) : tforms(std::move(tforms)...) {}
+        Shift(T a) : a(a) {}
 
-        template <typename T>
-        auto forward(T&& e) const {
-            auto image = std::forward<T>(e);
-            auto tfmap = [&](const auto&... tfs) const {
-                return ((image = tfs.forward(std::move(image)), ...);
-            };
-
-            std::apply(tfmap, tforms);
-            return image;
+        auto forward(Eigen::Array<T>&& M) const {
+            return M + a;
         }
 
-        template <typename T>
-        auto backward(T&& e) const {
-            auto preimage = std::forward<T>(e);
-            auto tfmap = [&](const auto&... tfs) const {
-                return ((preimage = tfs.backward(std::move(preimage))), ...);
-            };
-
-            std::apply(tfmap, reverse(tforms));
-            return preimage;
+        auto decode(Eigen::Array<T>&& M) const {
+            return M - a;
         }
-    
-    
+
     private:
-        std::tuple<Transforms...> tforms;
+        T a;
 };
+
+
+template <typename T>
+class Scale
+
 
 #endif
