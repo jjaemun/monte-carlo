@@ -7,7 +7,9 @@
 
 template <typename Class>
 class Simulator<Class> {
-
+    
+    static_assert(std::is_base_of<Simulator<Class>, Class>);
+    
     public:
         template <typename... Args>
         auto simulate(Args&&... args) {
