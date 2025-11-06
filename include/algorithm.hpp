@@ -2,8 +2,8 @@
 #define ALGORITHM_HPP
 
 
-#include <tuple>
 #include <type_traits>
+#include <tuple>
 
 #include "utilities.hpp"
 
