@@ -13,10 +13,18 @@ FetchContent_Declare(
     GIT_TAG master
 )
 
-FetchContent_MakeAvaliable(eigen)
+
+include(FetchContent)
+FetchContent_Declare(
+    eigenrand
+    GIT_REPOSITORY https://github.com/bab2min/EigenRand.git
+    GIT_TAG main
+)
+
+set(EIGENRAND_BUILD_TEST OFF CACHE BOOL "" FORCE)
 
 
-add_subdirectory(src)
+FetchContent_MakeAvailable(eigen eigenrand)
 
 
 option(ENABLE_TEST_BUILDS "Enable building tests." OFF)
