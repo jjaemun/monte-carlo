@@ -5,10 +5,6 @@
 #include <utility>
 
 
-template <typename... Ts>
-constexpr auto pack_size = sizeof...(Ts);
-
-
 template <typename To, typename From>
 constexpr auto down_cast(From &&from) -> To&& {
     return static_cast<To&&>(std::forward<From>(from));
@@ -23,6 +19,10 @@ template <typename To, typename From>
 constexpr auto down_cast(const From &from) -> const To& {
     return static_cast<const To&>(from);
 }
+
+
+template <typename... Ts>
+constexpr auto pack_size = sizeof...(Ts);
 
 
 #endif
