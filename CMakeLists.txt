@@ -13,8 +13,6 @@ FetchContent_Declare(
     GIT_TAG master
 )
 
-
-include(FetchContent)
 FetchContent_Declare(
     eigenrand
     GIT_REPOSITORY https://github.com/bab2min/EigenRand.git
