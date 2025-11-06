@@ -39,7 +39,7 @@ class Composite : public Transform<Composite<Transforms...>> {
         auto forward(T&& e) const {
             auto image = std::forward<T>(e);
             auto tfmap = [&](const auto&... tfs) {
-                return ((image = tfs.forward(std::move(image))), ...);
+                return ((image = tfs.forward(image)), ...);
             };
 
             std::apply(tfmap, tforms);
@@ -50,7 +50,7 @@ class Composite : public Transform<Composite<Transforms...>> {
         auto backward(T&& e) const {
             auto preimage = std::forward<T>(e);
             auto tfmap = [&](const auto&... tfs) {
-                return ((preimage = tfs.backward(std::move(preimage))), ...);
+                return ((preimage = tfs.backward(preimage)), ...);
             };
 
             std::apply(tfmap, reverse(tforms));
