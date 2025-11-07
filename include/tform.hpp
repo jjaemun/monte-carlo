@@ -57,7 +57,6 @@ class Composite : public Transform<Composite<Transforms...>> {
             return preimage;
         }
     
-    
     private:
         std::tuple<Transforms...> tforms;
 };
