@@ -4,7 +4,7 @@
 
 #include <type_traits>
 
-#include "meta.hpp"
+#include "algorithm.hpp"
 
 
 template <typename Class>
@@ -24,7 +24,6 @@ class Transform {
             return down_cast<Class>(*this).backward(std::forward<T>(e));
         }
 };
-
 
 
 template <typename... Transforms>
