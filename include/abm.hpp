@@ -17,7 +17,7 @@ class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
          : spot(spot), mu(mu), sigma(sigma), timesteps(timesteps), paths(paths) {}
 
         template <typename RNG>
-        auto sim(const T s, const T t, RNG rng) -> ARRAY2D<T> {
+        auto sim(const T s, const T t, RNG &&rng) -> ARRAY2D<T> {
             assert(s < t);
 
             T dt = (t - s) / T(timesteps);
