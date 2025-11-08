@@ -2,43 +2,35 @@
 #define ARITHMETIC_BROWNIAN_MOTION_HPP
 
 
-#include <EigenRand/EigenRand>
-#include <Eigen/Dense>
-
 #include <cassert>
 #include <cmath>
 
 #include "simulator.hpp"
+#include "runtime.hpp"
 
 
 template <typename T>
-class ArithmeticBrownianMotion : Simulator<ArithmeticBrownianMotion<T>> {
-    
-    template <typename Type>
-    using NDARRAY = Eigen::ArrayXX<Type>;
-
-    using INDEX = Eigen::Index;
-
+class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
     
     public:
         ArithmeticBrownianMotion(T spot, T mu, T sigma, INDEX timesteps, INDEX paths) 
          : spot(spot), mu(mu), sigma(sigma), timesteps(timesteps), paths(paths) {}
 
         template <typename RNG>
-        auto sim(const T s, const T t, RNG rng) -> NDARRAY<T> {
+        auto sim(const T s, const T t, RNG rng) -> ARRAY2D<T> {
             assert(s < t);
 
             T dt = (t - s) / T(timesteps);
-            NDARRAY<T> dw = Eigen::Rand::normal<NDARRAY<T>>(
+            auto dw = Eigen::Rand::normal<ARRAY2D<T>>(
                 paths, timesteps, rng) * std::sqrt(dt); 
              
-            NDARRAY<T> drift = NDARRAY<T>::Constant(paths, timesteps, mu * dt);
-            NDARRAY<T> diffusion = sigma * dw;
+            auto drift = ARRAY2D<T>::Constant(paths, timesteps, mu * dt);
+            auto diffusion = sigma * dw;
 
-            NDARRAY ds = drift + diffusion;
+            auto ds = drift + diffusion;
            
-            NDARRAY<T> s(paths, timesteps + 1);
-            s.col(0) = NDARRAY<T>::Constant(paths, 1, spot);
+            auto s(paths, timesteps + 1);
+            s.col(0) = ARRAY2D<T>::Constant(paths, 1, spot);
             s.block(0, 1, paths, timesteps) = 
                 s.col(0).rowwise() + ds.rowwise().cumsum();
 
