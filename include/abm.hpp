@@ -29,8 +29,8 @@ class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
 
             auto ds = drift + diffusion;
            
-            auto s(paths, timesteps + 1);
-            s.col(0) = ARRAY2D<T>::Constant(paths, 1, spot);
+            ARRAY2D<T> s(paths, timesteps + 1);
+            s.col(0) = ARRAY1D<T>::Constant(paths, spot);
             s.block(0, 1, paths, timesteps) = 
                 s.col(0).rowwise() + ds.rowwise().cumsum();
 
