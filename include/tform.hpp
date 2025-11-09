@@ -10,7 +10,6 @@
 template <typename Class>
 class Transform {
     public:
-    
         template <typename T>
         auto transform(T&& e) const {
             return down_cast<Class>(*this).forward(std::forward<T>(e));
