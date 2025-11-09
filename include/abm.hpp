@@ -9,6 +9,9 @@
 #include "contexts.hpp"
 
 
+// entirely experimental. just something tangible to look at while I develop the general architecture
+
+
 
 template <typename T>
 class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
@@ -16,16 +19,14 @@ class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
     static_assert(std::is_floating_point_v<T>);
 
     public:
-        ArithmeticBrownianMotion(const diffusion::context<T> &ctx, const abm::config<T> &config) 
-            : ctx(ctx), config(config) {}
+        ArithmeticBrownianMotion(const abm::config<T> &config) 
+            : config(config) {}
 
-        auto sim(const T s, const T t) -> array2d_t<T> {
-            const T dt = (t - s) / T(ctx.timesteps);
-
+        auto sim(const context &ctx) -> array2d_t<T> {
             const auto drift = array2d_t<T>::Constant(
-                ctx.paths, ctx.timesteps, config.mu * dt);
+                ctx.paths, ctx.timesteps, config.mu * ctx.dt);
             const auto diffusion = config.sigma 
-                * ctx.nn(0, std::sqrt(dt));
+                * ctx.nn(0, std::sqrt(ctx.dt));
             const auto ds = drift + diffusion;
            
             ARRAY2D<T> states(ctx.paths, ctx.timesteps + 1);
@@ -37,7 +38,6 @@ class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
         }
 
     private:
-        diffusion::context<T> &ctx;
         abm::config<T> &config;
 };
 
