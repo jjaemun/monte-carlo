@@ -7,7 +7,7 @@
 
 namespace detail {
     namespace default {
-        auto rng = random::rng::vmt64_t{ seed };
+        auto rng = random::rng::vmt64_t{ 0xff };
 
     }
 }
