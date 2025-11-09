@@ -2,7 +2,6 @@
 #define SIMULATION_CONTEXTS_HPP
 
 
-#include "types.hpp"
 #include "random.hpp"
 
 
@@ -13,20 +12,22 @@ namespace diffusion {
         static_assert(std::is_floating_point_v<T>);
 
         public:
-            context(INDEX timesteps, INDEX paths) : 
+            context(index_t timesteps, index_t paths) : 
                 timesteps(timesteps), paths(paths) {
-                    nn = RANDOM_NORMAL_GEN<ARRAY2D<T>>(
-                        paths, timesteps, DEFAULT_RNG);
                     tm = ARRAY1D<T>::LinSpaced(
                         timesteps, 0.0, 1.0);
 
             }
 
-            ARRAY2D<T> nn;
+            auto nn(T mu, T sigma) const noexcept -> ARRAY2D<T> {
+                return random::normal<ARRAY2D<T>>(
+                    paths, timesteps, mu, sigma);
+            }
+
             ARRAY1D<T> tm;
 
-            INDEX timesteps;
-            INDEX paths;
+            index_t timesteps;
+            index_t paths;
     };
 }
 
@@ -38,24 +39,22 @@ namespace jump {
         static_assert(std::is_floating_point_v<T>);
 
         public:
-            context(INDEX timesteps, INDEX paths) : 
+            context(index_t timesteps, index_t paths) : 
                 timesteps(timesteps), paths(paths) {
-                    ss = RANDOM_NORMAL_GEN<ARRAY2D<T>>(
-                        paths, timesteps, DEFAULT_RNG);
                     tm = ARRAY1D<T>::LinSpaced(
                         timesteps, 0.0, 1.0);
 
             }
 
-            auto pp(T intensity) const {
-                // todo!.
+            auto pp(T intensity) const noexcept -> ARRAY2D<T> {
+                return random::poisson(
+                    paths, timesteps, intensity);
             }
 
-            ARRAY2D<T> ss;
-            ARRAY2D<T> tm;
+            ARRAY1D<T> tm;
 
-            INDEX timesteps;
-            INDEX paths;
+            index_t timesteps;
+            index_t paths;
     };
 }
 

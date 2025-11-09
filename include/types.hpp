@@ -5,25 +5,33 @@
 #include <Eigen/Dense>
 
 
-using INDEX = Eigen::Index;
-
-
-using DYNAMIC = Eigen::Dynamic;
-
+using index_t = Eigen::Index;
+using dynamic_t = Eigen::Dynamic;
 
 template <typename Type>
-using ARRAY1D = Eigen::Array<Type, DYNAMIC, INDEX(1)>;
-
+using ARRAY1D = Eigen::Array<Type, dynamic_t, index_t(1)>;
 
 template <typename Type>
-using ARRAY2D = Eigen::Array<Type, DYNAMIC, DYNAMIC>;
+using ARRAY2D = Eigen::Array<Type, dynamic_t, dynamic_t>;
 
 
-using DEFAULT_RNG = Eigen::Rand::Vmt19937_64; 
+namespace random {
+    namespace rng {
+        using mt64_t = Eigen::Rand::Vmt19937_64;
+    }
+}
 
+namespace detail {
+    namespace default {
+        // default seed for reproducibility;
+        int seed = 0xff;
+    
+        // generic engine. Support is limited currently.
+        auto rng = random::rng::mt64_t{ seed };
 
-#define RANDOM_NORMAL_GEN Eigen::Random::normal
-
+        //
+    }
+}
 
 
 #endif
