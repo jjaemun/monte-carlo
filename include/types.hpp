@@ -24,10 +24,10 @@ using index_t = Eigen::Index;
 using dynamic_t = Eigen::Dynamic;
 
 template <typename Type>
-using ARRAY1D = Eigen::Array<Type, dynamic_t, index_t(1)>;
+using array1d_t = Eigen::Array<Type, dynamic_t, index_t(1)>;
 
 template <typename Type>
-using ARRAY2D = Eigen::Array<Type, dynamic_t, dynamic_t>;
+using array2d_t = Eigen::Array<Type, dynamic_t, dynamic_t>;
 
 
 #endif
