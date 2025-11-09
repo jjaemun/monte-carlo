@@ -47,5 +47,45 @@ class TheoreticMoments {
         } 
 };       
 
+template<typename Class>
+class SampleMoments {
+    
+    static_assert(std::is_base_of_v<SampleMoments<Class>, Class>);
+
+    public:
+      template <typename... Args>
+        auto mean(Args&&... args) {
+
+            /**
+             * Computes empirical process mean from pathwise
+             * realisations over simulation period.
+             */
+
+            return down_cast<Class>(*this).sm(std::forward<Args>(args)...);
+        }
+
+        template <typename... Args>
+        auto variance(Args&&... args) {
+
+            /**
+             * Returns empirical variance from pathwise 
+             * realisations over the simulation period.
+             */
+
+            return down_cast<Class>(*this).sv(std::forward<Args>(args)...);
+        } 
+
+        template <typename... Args>
+        auto autocovariance(Args&&... args) {
+
+            /**
+             * Computes the two-times (mixed) empirical variance
+             * from process pathwise realisations.
+             */
+
+            return down_cast<Class>(*this).sav(std::forward<Args>(args)...);
+        } 
+};      
+
 
 #endif
