@@ -2,8 +2,6 @@
 #define SIMULATOR_HPP
 
 
-#include <type_traits>
-
 #include "utilities.hpp"
 
 
