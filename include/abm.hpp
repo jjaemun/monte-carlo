@@ -21,10 +21,11 @@ class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
 
         auto sim(const T s, const T t) -> ARRAY2D<T> {
             const T dt = (t - s) / T(ctx.timesteps);
+
             const auto drift = ARRAY2D<T>::Constant(
                 ctx.paths, ctx.timesteps, config.mu * dt);
-            const auto diffusion = config.sigma * 
-                ctx.nn(0, std::sqrt(dt));
+            const auto diffusion = config.sigma 
+                * ctx.nn(0, std::sqrt(dt));
             const auto ds = drift + diffusion;
            
             ARRAY2D<T> states(ctx.paths, ctx.timesteps + 1);
