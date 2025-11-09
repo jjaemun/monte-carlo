@@ -12,11 +12,11 @@ using DYNAMIC = Eigen::Dynamic;
 
 
 template <typename Type>
-using ARRAY1D = Eigen::Array<T, DYNAMIC, INDEX(1)>;
+using ARRAY1D = Eigen::Array<Type, DYNAMIC, INDEX(1)>;
 
 
 template <typename Type>
-using ARRAY2D = Eigen::Array<T, DYNAMIC, DYNAMIC>;
+using ARRAY2D = Eigen::Array<Type, DYNAMIC, DYNAMIC>;
 
 
 template <typename Class>
