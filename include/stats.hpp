@@ -9,9 +9,6 @@
 
 template<typename Class>
 class TheoreticMoments {
-    
-    static_assert(std::is_base_of_v<TheoreticMoments<Class>, Class>);
-
     public:
       template <typename... Args>
         auto mean(Args&&... args) {
@@ -49,9 +46,6 @@ class TheoreticMoments {
 
 template<typename Class>
 class SampleMoments {
-    
-    static_assert(std::is_base_of_v<SampleMoments<Class>, Class>);
-
     public:
       template <typename... Args>
         auto mean(Args&&... args) {

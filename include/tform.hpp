@@ -9,9 +9,6 @@
 
 template <typename Class>
 class Transform {
-
-    static_assert(std::is_base_of_v<Transform<Class>, Class>);
-
     public:
     
         template <typename T>
