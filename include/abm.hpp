@@ -11,18 +11,17 @@
 template <typename T>
 class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
 
-    public:
-        ArithmeticBrownianMotion(T spot, T mu, T sigma, INDEX timesteps, INDEX paths) 
-         : spot(spot), mu(mu), sigma(sigma), timesteps(timesteps), paths(paths) {}
+    static_assert(std::is_floating_point_v<T>);
 
+    public:
         template <typename RNG>
-        auto sim(const T s, const T t, RNG &&rng) -> ARRAY2D<T> {
+        ArithmeticBrownianMotion(T spot, T mu, T sigma, INDEX timesteps, INDEX paths); 
+
+        auto sim(const T s, const T t) -> ARRAY2D<T> {
             T dt = (t - s) / T(timesteps);
-            auto dw = Eigen::Rand::normal<ARRAY2D<T>>(
-                paths, timesteps, rng) * std::sqrt(dt); 
              
             auto drift = ARRAY2D<T>::Constant(paths, timesteps, mu * dt);
-            auto diffusion = sigma * dw;
+            auto diffusion = sigma * samples * std::sqrt(dt);
 
             auto ds = drift + diffusion;
            
@@ -32,13 +31,25 @@ class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
                 s.col(0).rowwise() + ds.rowwise().cumsum();
 
             return s;
-    }
+        }
 
-    private:
         T spot, mu, sigma;
-        INDEX timesteps;
-        INDEX paths;
+    
+    private:
+        ARRAY2D<T> samples;
+        INDEX timesteps, paths;
 };
+
+
+template <typename T>
+ArithmeticBrownianMotion<T>::ArithmeticBrownianMotion(T spot, T mu, T sigma, INDEX timesteps, INDEX paths)
+: spot(spot), mu(mu), sigma(sigma), timesteps(timesteps), paths(paths) {
+    this->samples = RANDOM_NORMAL_GEN<ARRAY2D<T>(
+        paths, timesteps, DEFAULT_RNG);
+}
+
+
+
 
 
 #endif 
