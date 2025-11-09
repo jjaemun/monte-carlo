@@ -79,11 +79,11 @@ class SampleMoments {
         auto autocovariance(Args&&... args) {
 
             /**
-             * Computes the two-times (mixed) empirical variance
+             * Computes the two-times empirical covariance from 
              * from process pathwise realisations.
              */
 
-            return down_cast<Class>(*this).sav(std::forward<Args>(args)...);
+            return down_cast<Class>(*this).sc(std::forward<Args>(args)...);
         } 
 };      
 
