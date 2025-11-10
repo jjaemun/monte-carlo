@@ -12,7 +12,5 @@ class cache {
 
 };
 
-    
-
 
 #endif
