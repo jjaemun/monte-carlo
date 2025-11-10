@@ -7,6 +7,8 @@
 
 template <typename... Simulators>
 class SimulationDriver {
+
+    //! clearly doesnt work at all crtp X heterogenous containers... just a class sketch.
     
     static_assert(pack_size<Simulators...> > 0);
 
