@@ -12,7 +12,7 @@ class SimulationDriver {
 
     public:
         SimulationDriver(Simulators&&... sims) {
-            sims = { std::make_unique<std::decay_t<Simulators>>(
+            sims = { std::make_unique<std::common_type<std::decay_t<Simulators>>...>(
                 std::forward<Simulators>(sims))...  };
         }
 
@@ -23,6 +23,7 @@ class SimulationDriver {
 
     
     private:
-        std::vector<std::unique_ptr<Simulator>> simulators;
+        std::vector<std::unique_ptr<Simulator>> sims;
+};
 
 #endif 
