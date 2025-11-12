@@ -6,10 +6,7 @@
 
 #include "simulator.hpp"
 #include "configs.hpp"
-#include "contexts.hpp"
-
-
-// entirely experimental. just something tangible to look at while I develop the general architecture
+#include "context.hpp"
 
 
 
@@ -22,14 +19,16 @@ class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
         ArithmeticBrownianMotion(const abm::config<T> &config) 
             : config(config) {}
 
-        auto sim(const context &ctx) -> array2d_t<T> {
+        auto sim(const context &ctx) -> array2d_t<T> const noexcept {
+            const T dt = (ctx.t - ctx.s) 
+                / static_cast<T>(ctx.timesteps);
             const auto drift = array2d_t<T>::Constant(
-                ctx.paths, ctx.timesteps, config.mu * ctx.dt);
-            const auto diffusion = config.sigma 
-                * ctx.nn(0, std::sqrt(ctx.dt));
+                ctx.paths, ctx.timesteps, config.mu * dt);
+            const auto diffusion = config.sigma * random::normal(
+                ctx.paths, ctx.timesteps, 0, std::sqrt(dt));
             const auto ds = drift + diffusion;
            
-            ARRAY2D<T> states(ctx.paths, ctx.timesteps + 1);
+            array2d_t<T> states(ctx.paths, ctx.timesteps + 1);
             states.col(0) = array2d_t<T>::Constant(ctx.paths, 1, config.spot);
             states.block(0, 1, ctx.paths, ctx.timesteps) = 
                 states.col(0).rowwise() + ds.rowwise().cumsum();
