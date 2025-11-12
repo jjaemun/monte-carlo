@@ -32,4 +32,15 @@ namespace ou {
 }
 
 
+namespace feller {
+    template <typename T>
+    struct config {
+        T spot;
+        T kappa;
+        T theta;
+        T sigma;
+    };
+}
+
+
 #endif
