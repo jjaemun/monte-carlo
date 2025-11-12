@@ -10,7 +10,7 @@ include(FetchContent)
 FetchContent_Declare(
     eigen
     GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
-    GIT_TAG master
+    GIT_TAG 3.4
 )
 
 FetchContent_MakeAvailable(eigen)
@@ -23,6 +23,19 @@ FetchContent_Declare(
 
 set(EIGENRAND_BUILD_TEST OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(eigenrand)
+
+
+add_library(monte-carlo INTERFACE)
+target_include_directories(
+    monte-carlo INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(
+    monte-carlo INTERFACE
+    Eigen3::Eigen
+    EigenRand::EigenRand
+)
 
 
 option(ENABLE_TEST_BUILDS "Enable building tests." OFF)
