@@ -9,7 +9,7 @@
 +-------------------------------+----------------------------------------+
 | Task                          | Notes / Status                         |
 +-------------------------------+----------------------------------------+
-| In-place cumsum helper         | Implement efficient column-wise sum    |
+| In-place cumsum helper         | Implement efficient column-wise sum   |
 | Blockwise operations           | Design iteration / partitioning logic |
 | Stats interfaces               | Define CRTP-based sample & theoretic  |
 | Driver redesign                | Rethink multi-simulator orchestration |
