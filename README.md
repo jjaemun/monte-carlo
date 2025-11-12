@@ -1,7 +1,7 @@
 # monte-carlo!
 
 ## Overview 
-`monte-carlo` is <in progress...>.
+`monte-carlo` is `in progress...`
 
 
 ## TODO!
