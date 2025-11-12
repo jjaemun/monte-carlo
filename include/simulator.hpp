@@ -2,7 +2,10 @@
 #define SIMULATOR_HPP
 
 
+#include <cmath>
+
 #include "utilities.hpp"
+#include "random.hpp"
 
 
 template <typename kernel>
