@@ -21,8 +21,15 @@ constexpr auto down_cast(const From &from) -> const To& {
 }
 
 
+template <typename T>
+constexpr auto count_from_bytes(size_t bytes) -> size_t {
+    return static_cast<size_t>(bytes / sizeof(T));
+}
+
+
 template <typename... Ts>
 constexpr auto pack_size = sizeof...(Ts);
+
 
 
 #endif
