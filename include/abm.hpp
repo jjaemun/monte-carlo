@@ -34,10 +34,8 @@ class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
             states.col(0) = array2d_t<T>::Constant(
                 ctx.paths, 1, config.spot);
 
-            for (index_t i = 0; i < states.rows(); ++i) {
-                for (index_t j = 1; j < states.cols(); ++j) {
-                    states(i, j) = states(i, j - 1) + ds(i, j - 1);
-                }
+            for (index_t j = 1; j < states.cols(); ++j) {
+                states.col(j) = states.col(j - 1) + ds.col(j - 1);
             }
 
             return states;
