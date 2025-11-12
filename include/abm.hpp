@@ -7,6 +7,7 @@
 #include "simulator.hpp"
 #include "configs.hpp"
 #include "context.hpp"
+#include "random.hpp"
 
 
 
@@ -19,25 +20,31 @@ class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
         ArithmeticBrownianMotion(const abm::config<T> &config) 
             : config(config) {}
 
-        auto sim(const context &ctx) -> array2d_t<T> const noexcept {
+        auto sim(const context<T> &ctx) const -> array2d_t<T> {
             const T dt = (ctx.t - ctx.s) 
                 / static_cast<T>(ctx.timesteps);
+
             const auto drift = array2d_t<T>::Constant(
                 ctx.paths, ctx.timesteps, config.mu * dt);
-            const auto diffusion = config.sigma * random::normal(
-                ctx.paths, ctx.timesteps, 0, std::sqrt(dt));
-            const auto ds = drift + diffusion;
+            const auto diffusion = config.sigma * rng::normal(
+                ctx.paths, ctx.timesteps, 0.0, std::sqrt(dt));
+            auto ds = (drift + diffusion).eval();
            
             array2d_t<T> states(ctx.paths, ctx.timesteps + 1);
-            states.col(0) = array2d_t<T>::Constant(ctx.paths, 1, config.spot);
-            states.block(0, 1, ctx.paths, ctx.timesteps) = 
-                states.col(0).rowwise() + ds.rowwise().cumsum();
+            states.col(0) = array2d_t<T>::Constant(
+                ctx.paths, 1, config.spot);
+
+            for (index_t i = 0; i < states.rows(); ++i) {
+                for (index_t j = 1; j < states.cols(); ++j) {
+                    states(i, j) = states(i, j - 1) + ds(i, j - 1);
+                }
+            }
 
             return states;
         }
 
     private:
-        abm::config<T> &config;
+        const abm::config<T> &config;
 };
 
 
