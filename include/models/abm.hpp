@@ -26,13 +26,10 @@ class ArithmeticBrownianMotion : public Simulator<ArithmeticBrownianMotion<T>> {
             auto ds = (drift + diffusion).eval();
            
             array2d_t<T> states(ctx.paths, ctx.timesteps + 1);
-            states.col(0) = array2d_t<T>::Constant(
-                ctx.paths, 1, config.spot);
+            states << array2d_t<T>::Constant(
+                ctx.paths, 1, config.spot), ds;
 
-            for (index_t j = 1; j < states.cols(); ++j) {
-                states.col(j) = states.col(j - 1) + ds.col(j - 1);
-            }
-
+            cumsum(states);
             return states;
         }
 

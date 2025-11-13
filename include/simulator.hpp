@@ -4,6 +4,7 @@
 
 #include <cmath>
 
+#include "algorithm.hpp"
 #include "utilities.hpp"
 #include "random.hpp"
 
