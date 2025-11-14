@@ -2,27 +2,24 @@
 #define GEOMETRIC_BROWNIAN_MOTION_HPP
 
 
-#include "simulator.hpp"
+#include "kernel.hpp"
 #include "configs.hpp"
 #include "context.hpp"
 
 
 template <typename T>
-class GeometricBrownianMotion : public Simulator<GeometricBrownianMotion<T>> {
+class GBM : public kernel<GBM<T>> {
 
     static_assert(std::is_floating_point_v<T>);
 
     public:
-        GeometricBrownianMotion(const gbm::config<T> &config) 
-            : config(config) {}
+        GBM(const gbm::config<T> &config) : config(config) {}
 
-        auto sim(const context<T> &ctx) const -> array2d_t<T> {
-            const T dt = (ctx.t - ctx.s) 
-                / static_cast<T>(ctx.timesteps);
+        auto operator()(const context<T> &ctx) const noexcept {
             const auto drift = (config.mu - 0.5 * config.sigma * 
-                config.sigma)* dt;
+                config.sigma)* ctx.dt;
             const auto diffusion = config.sigma * rng::normal(
-                ctx.paths, ctx.timesteps, 0.0, std::sqrt(dt));
+                ctx.paths, ctx.timesteps, 0.0, std::sqrt(ctx.dt));
             auto ds = (drift + diffusion).eval();
            
             array2d_t<T> states(ctx.paths, ctx.timesteps + 1);

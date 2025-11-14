@@ -1,5 +1,5 @@
-#ifndef SIMULATOR_HPP
-#define SIMULATOR_HPP
+#ifndef KERNEL_HPP
+#define KERNEL_HPP
 
 
 #include <cmath>
@@ -9,16 +9,16 @@
 #include "random.hpp"
 
 
-template <typename kernel>
-class Simulator {
+template <typename functor>
+class kernel {
 
     template <typename... Args>
-    using Ret = decltype(std::declval<kernel>()(std::declval<Args>()...));
+    using Ret = decltype(std::declval<functor>()(std::declval<Args>()...));
 
     public:
         template <typename... Args>
         auto simulate(Args&&... args) const -> Ret<Args...> {
-            return down_cast<kernel>(*this)(std::forward<Args>(args)...); 
+            return down_cast<functor>(*this)(std::forward<Args>(args)...); 
         }
 };
 
