@@ -2,9 +2,17 @@
 #define STATS_HPP
 
 
-#include <type_traits>
-
 #include "utilities.hpp"
+#include "visitor.hpp"
+
+class KernelVisitor;
+class Moments {
+    public:
+        Moments(const KernelVisitor *v) : visitor(std::move(v)) {}
+
+    private:
+        KernelVisitor *visitor;
+};
 
 
 template<typename Class>
