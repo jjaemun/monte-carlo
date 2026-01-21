@@ -10,7 +10,7 @@
 template <typename Class>
 class RandomNumberGenerator {
     public:
-        RandomNumberGenerator(const Class &rng) : rng(std::move(rng)) {}
+        RandomNumberGenerator(Class &&rng) : rng(std::move(rng)) {}
 
         auto operator()(void) noexcept {
             return rng();

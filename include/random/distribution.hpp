@@ -1,13 +1,13 @@
 #ifndef DISTRIBUTION_HPP
 #define DISTRIBUTION_HPP
 
-
+#include <ranges>
 #include <utility>
+#include <vector>
 
 #include "types.hpp"
 
 
-template <typename Class>
 class StatisticalDistribution {
     public:
         virtual ~StatisticalDistribution() = default;
