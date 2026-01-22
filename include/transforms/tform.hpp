@@ -13,9 +13,9 @@
 
 class Transform {
     public:
+        virtual ~Transform() = default;
         virtual void forward(std::vector<f64> &data) = 0;
         virtual void inverse(std::vector<f64> &data) = 0;
-        virtual ~Transform() = default;
 };
 
 
