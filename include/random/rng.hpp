@@ -7,17 +7,17 @@
 #include "types.hpp"
 
 
-template <typename Class>
+template <typename EntropySource>
 class RandomNumberGenerator {
     public:
-        RandomNumberGenerator(Class &&rng) : rng(std::move(rng)) {}
+        RandomNumberGenerator(EntropySource &&src) : src(std::move(src)) {}
 
         auto operator()(void) noexcept {
-            return rng();
+            return src();
         }
 
     private:
-        Class rng;
+        EntropySource src;
 };
 
 
