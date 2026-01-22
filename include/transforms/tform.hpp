@@ -1,8 +1,11 @@
 #ifndef TFORM_HPP
 #define TFORM_HPP
 
+
+#include <memory>
 #include <ranges>
 #include <type_traits>
+#include <utility>
 #include <vector>
 
 #include "types.hpp"
@@ -10,9 +13,8 @@
 
 class Transform {
     public:
-        virtual void transform(std::vector<f64> &data) = 0;
-        virtual void inverse_transform(std::vector<f64> &data) = 0;
-
+        virtual void forward(std::vector<f64> &data) = 0;
+        virtual void inverse(std::vector<f64> &data) = 0;
         virtual ~Transform() = default;
 };
 
@@ -20,25 +22,26 @@ class Transform {
 template <typename... Transforms>
 class Composite final : public Transform {
     
-    static_assert((std::is_base_of_v<Transform, Transforms> && ...);
+    static_assert((std::is_base_of_v<Transform, Transforms> && ...));
 
     public:
-        explicit Composite(Transforms*... transforms) : transforms{ transforms... } {}
+        explicit Composite(std::unique_ptr<Transforms>... transforms) 
+            : transforms{ std::move(transforms)... } {}
 
-        void transform(std::vector<f64> &data) override {
+        void forward(std::vector<f64> &data) override {
             for (auto &tform : transforms) {
-                tform->transform(data);
+                tform->forward(data);
             }
         }
 
-        void inverse_transform(std::vector<f64> &data) override {
+        void inverse(std::vector<f64> &data) override {
             for (auto &tform : transforms | std::views::reverse) {
-                 tform->inverse_transform(data);
+                 tform->inverse(data);
             }
         }
 
     private:
-        std::vector<Transform*> transforms;
+        std::vector<std::unique_ptr<Transform>> transforms;
 };
 
 
