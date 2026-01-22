@@ -2,91 +2,66 @@
 #define STATS_HPP
 
 
-#include "utilities.hpp"
-#include "visitor.hpp"
-
-class KernelVisitor;
-class Moments {
-    public:
-        Moments(const KernelVisitor *v) : visitor(std::move(v)) {}
-
-    private:
-        KernelVisitor *visitor;
-};
+#include <cmath>
+#include <numeric>
+#include <vector>
 
 
-template<typename Class>
-class TheoreticMoments {
+class GenericTheoreticMoments {
     public:
       template <typename... Args>
-        auto mean(Args&&... args) {
+        virtual auto mean(Args&&... args) const = 0;
 
             /**
              * Computes theoretic path of one-time first order 
              * moments over the simulation period.
              */
 
-            return down_cast<Class>(*this).fm(std::forward<Args>(args)...);
-        }
 
         template <typename... Args>
-        auto variance(Args&&... args) {
+        virtual auto variance(Args&&... args) const = 0;
 
             /**
              * Returns theoretic dispersion / second-order one-
              * time central moments over the simulation period.
              */
 
-            return down_cast<Class>(*this).scm(std::forward<Args>(args)...);
-        } 
-
         template <typename... Args>
-        auto autocovariance(Args&&... args) {
+        virtual auto autocovariance(Args&&... args) const = 0;
 
             /**
              * Computes the two-times (mixed) second-order 
              * process central moments.
              */
-
-            return down_cast<Class>(*this).mscm(std::forward<Args>(args)...);
-        } 
 };       
 
-template<typename Class>
-class SampleMoments {
+class GenericSampleMoments {
     public:
-      template <typename... Args>
-        auto mean(Args&&... args) {
+        template <typename... Args>
+        virtual auto mean(Args&&... args) const = 0;
 
             /**
              * Computes empirical process mean from pathwise
              * realisations over simulation period.
              */
 
-            return down_cast<Class>(*this).sm(std::forward<Args>(args)...);
-        }
 
         template <typename... Args>
-        auto variance(Args&&... args) {
+        virtual auto variance(Args&&... args) const = 0;
 
             /**
              * Returns empirical variance from pathwise 
              * realisations over the simulation period.
              */
 
-            return down_cast<Class>(*this).sv(std::forward<Args>(args)...);
-        } 
 
         template <typename... Args>
-        auto autocovariance(Args&&... args) {
+        virtual auto autocovariance(Args&&... args) = 0;
 
             /**
              * Computes the two-times empirical covariance from 
              * from process pathwise realisations.
              */
-
-            return down_cast<Class>(*this).sc(std::forward<Args>(args)...);
-        } 
 };      
 
 
