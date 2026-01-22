@@ -10,7 +10,8 @@
 template <typename EntropySource>
 class RandomNumberGenerator {
     public:
-        RandomNumberGenerator(EntropySource &&src) : src(std::move(src)) {}
+        explicit RandomNumberGenerator(EntropySource &&src) 
+            : src(std::move(src)) {}
 
         auto operator()(void) noexcept {
             return src();
