@@ -26,15 +26,14 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
         }
     
         auto sv(const std::vector<std::vector<f64>> &samples) const {
-            auto means = sm(samples);
-
             std::vector<f64> variance{};
             variance.reserve(samples.size());
-            for (auto [timestep, m] : std::views::zip(samples, means)) {
+            auto means = sm(samples);
+            for (auto [timestep, mean] : std::views::zip(samples, means)) {
                 auto n = static_cast<f64>(timestep.size());
                 auto sum = (f64)0.0;
                 for (auto state : timestep) {
-                    auto diff = state - m; 
+                    auto diff = state - mean; 
                     sum += diff * diff;
                 }
             
