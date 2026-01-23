@@ -21,7 +21,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             auto n = static_cast<f64>(samples.size());
             auto mean = sm(samples);
             
-            f64 sum = (f64)0.0;
+            auto sum = (f64)0.0;
             for (auto sample : samples) {
                 auto diff = sample - mean;
                 acc += diff * diff;
