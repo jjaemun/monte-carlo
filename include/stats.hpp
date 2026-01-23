@@ -16,7 +16,7 @@ class GenericTheoreticMoments {
              * moments over the simulation period.
              */
 
-            return static_cast<Class>(*this).fm(std::forward<Args>(args)...);
+            return static_cast<Class&>(*this).fm(std::forward<Args>(args)...);
         }
 
         template <typename... Args>
@@ -27,7 +27,7 @@ class GenericTheoreticMoments {
              * time central moments over the simulation period.
              */
 
-            return static_cast<Class>(*this).scm(std::forward<Args>(args)...);
+            return static_cast<Class&>(*this).scm(std::forward<Args>(args)...);
         } 
 
         template <typename... Args>
@@ -38,7 +38,7 @@ class GenericTheoreticMoments {
              * process central moments.
              */
 
-            return static_cast<Class>(*this).mscm(std::forward<Args>(args)...);
+            return static_cast<Class&>(*this).mscm(std::forward<Args>(args)...);
         } 
 };      
 
@@ -54,7 +54,7 @@ class GenericSampleMoments {
              * realisations over simulation period.
              */
 
-            return static_cast<Class>(*this).sm(std::forward<Args>(args)...);
+            return static_cast<Class&>(*this).sm(std::forward<Args>(args)...);
         }
 
         template <typename... Args>
@@ -65,7 +65,7 @@ class GenericSampleMoments {
              * realisations over the simulation period.
              */
 
-            return static_cast<Class>(*this).sv(std::forward<Args>(args)...);
+            return static_cast<Class&>(*this).sv(std::forward<Args>(args)...);
         } 
 
         template <typename... Args>
@@ -76,7 +76,7 @@ class GenericSampleMoments {
              * from process pathwise realisations.
              */
 
-            return static_cast<Class>(*this).sc(std::forward<Args>(args)...);
+            return static_cast<Class&>(*this).sc(std::forward<Args>(args)...);
         } 
 };      
 
