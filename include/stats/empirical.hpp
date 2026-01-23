@@ -16,6 +16,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
                 std::accumulate(samples.begin(), samples.end(), (f64)0.0); 
 
             return sum / n;
+        }
     
         auto sv(const std::vector<f64> &samples) const {
             auto n = static_cast<f64>(samples.size());
