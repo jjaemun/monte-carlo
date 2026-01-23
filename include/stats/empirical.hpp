@@ -17,7 +17,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
 
             return sum / n;
     
-        auto sv(const std::vector<f64> &samples) const }
+        auto sv(const std::vector<f64> &samples) const {
             auto n = static_cast<f64>(samples.size());
             auto mean = sm(samples);
             
