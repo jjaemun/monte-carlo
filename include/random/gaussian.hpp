@@ -13,10 +13,12 @@ class Gaussian : public StatisticalDistribution {
         explicit Gaussian(RandomNumberGenerator& rng, f64 mu, f64 sigma) 
             : rng(rng), dist(mu,sigma) {}
 
-        auto sample(u64 n) -> std::vector<f64> override {
-            std::vector<f64> samples(n);
-            for (auto &sample : samples) {
-                sample = dist(rng());
+        auto sample(u64 n, u64 m) override {
+            std::vector<std::vector<f64>> samples(n, std::vector<f64>(m));
+            for (auto &row: samples) {
+                for (auto &column : row) {
+                    sample = dist(rng());
+                }
             }
 
             return samples;
