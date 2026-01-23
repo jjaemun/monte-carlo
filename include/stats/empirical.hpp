@@ -21,14 +21,12 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             auto n = static_cast<f64>(samples.size());
             auto mean = sm(samples);
             
-            std::vector<f64> elements(samples.begin(), samples.end());
-            for (auto &e : elements) {
-                e = (e - mean) * (e - mean);                
+            f64 sum = (f64)0.0;
+            for (auto sample : samples) {
+                auto diff = sample - mean;
+                acc += diff * diff;
             }
 
-            auto sum = 
-                std::accumulate(elements.begin(), elements.end(), (f64)0.0);
-            
             return sum / n;
         }
 
