@@ -72,7 +72,7 @@ class GenericSampleMoments {
         auto autocovariance(Args&&... args) {
 
             /**
-             * Computes the two-times empirical covariance from 
+             * Computes the two-times empirical covariance 
              * from process pathwise realisations.
              */
 
