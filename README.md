@@ -5,7 +5,7 @@
 that there is still way too much work ahead. Just recently I changed the project
 scope entirely, in favour of a clarity-and-correctness-first, pure `stl` approach. 
 This is motivated by at least two desires. To familiarise myself with the 
-provided algorithms, mechanisms etc provided in the `stl` (even when some sections
+provided algorithms, mechanisms etc provided in the `stl` (even if some sections
 showcase excessive emphasis on `stl` machinery); and, to create a 
 solid foundation for later development - a benchmark of sorts. The extension to 
 different backends is natural beyond that point, along with the effort it takes
