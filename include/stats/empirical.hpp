@@ -3,6 +3,7 @@
 
 
 #include <algorithm>
+#include <cmath>
 #include <ranges>
 #include <vector>
 
@@ -71,8 +72,8 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
         }
 };
 
-class PearsonAutocorrelation : 
-public GenericPearsonAutocorrelation<PearsonAutocorrelation> {
+class SamplePearsonAutocorrelation : 
+public GenericSampleAutocorrelation<PearsonAutocorrelation> {
     public:
         auto spa(const std::vector<std::vector<f64>> &samples) const {
             std::vector<std::vector<f64>> autocorrelation(samples.size());
@@ -105,6 +106,12 @@ public GenericPearsonAutocorrelation<PearsonAutocorrelation> {
 
     private:
         inline SampleMoments empirical{};
+};
+
+
+class SpearmanSampleAutocorrelation : 
+public GenericSampleAutocorrelation<PearsonAutocorrelation> {
+
 };
 
 

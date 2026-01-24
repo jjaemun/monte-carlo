@@ -82,17 +82,17 @@ class GenericSampleMoments {
 
 
 template<typename Class>
-class GenericPearsonAutocorrelation {
+class GenericSampleAutocorrelation {
     public:
         template <typename... Args>
         auto operator()(Args&&... args) {
             
             /**
-             * Computes the linear correlation / normalised empirical
+             * Computes the correlation / normalised empirical
              * covariance from process pathwise realisations.
              */
 
-            return static_cast<Class&>(*this).spa(std::forward<Args>(args)...);
+            return static_cast<Class&>(*this).sac(std::forward<Args>(args)...);
         } 
 };
         
