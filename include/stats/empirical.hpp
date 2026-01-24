@@ -71,7 +71,8 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
         }
 };
 
-class PearsonAutocorrelation : public GenericPearsonAutocorrelation<PearsonAutocorrelation> {
+class PearsonAutocorrelation : 
+public GenericPearsonAutocorrelation<PearsonAutocorrelation> {
     public:
         auto spa(const std::vector<std::vector<f64>> &samples) const {
             std::vector<std::vector<f64>> autocorrelation(samples.size());
