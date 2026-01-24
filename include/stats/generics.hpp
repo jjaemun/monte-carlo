@@ -5,6 +5,7 @@
 #include <utility>
 
 
+// moments.
 template <typename Class>
 class GenericTheoreticMoments {
     public:
@@ -81,6 +82,7 @@ class GenericSampleMoments {
 };
 
 
+//autocorrelations.
 template<typename Class>
 class GenericTheoreticAutocorrelation {
     public:
