@@ -6,7 +6,8 @@
 #include "random/gaussian.hpp"
 
 
-class GaussianMoments : public GenericTheoreticMoments<GaussianMoments> {
+class GaussianMoments : 
+public GenericTheoreticMoments<GaussianMoments> {
     public:
         auto fm(const Gaussian &gaussian) const noexcept -> f64 {
             return gaussian.mean();
