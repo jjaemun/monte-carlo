@@ -99,7 +99,38 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             }
 
             return skewness;
+        }        
+
+        auto sk(const std::vector<std::vector<f64>> &samples) const {
+            std::vector<f64> kurtosis{};
+            kurtosis.reserve(samples.size());
+
+            const auto means = sm(samples);
+            const auto variance = sv(samples);
+
+            for (const auto& [timestep, mean, var] :
+                    std::views::zip(samples, means, variance)) {
+                const auto paths = static_cast<f64>(timestep.size());
+
+                if (var <= (f64)0.0) {
+                    kurtosis.emplace_back((f64)0.0);
+                    continue;
+                }
+                
+                auto sum = (f64)0.0;
+                for (auto state : timestep) {
+                    auto diff = state - mean;
+                    sum += diff * diff * diff *diff;
+                }
+          
+                // normalizing base.
+                const auto norm = std::pow(var, (f64)2.0);
+                kurtosis.emplace_back(sum / (paths * norm));
+            }
+
+            return kurtosis;
         }
+
 };
 
 class SamplePearsonAutocorrelation : 
@@ -119,12 +150,12 @@ public GenericSampleAutocorrelation<SamplePearsonAutocorrelation> {
 
             for (auto s : std::views::iota(0, timesteps)) {
                  for (auto t : std::views::iota(s, timesteps)) {
-                    const auto denom = std::sqrt(variance[s]) * 
+                    const auto norm= std::sqrt(variance[s]) * 
                         std::sqrt(variance[t]);
 
                     f64 corr{};
-                    if (denom > 0.0)
-                        corr = autocovariance[s][t] / denom; 
+                    if (norm > 0.0)
+                        corr = autocovariance[s][t] / norm; 
                         
                     autocorrelation[s][t] = corr;
                     autocorrelation[t][s] = corr;
