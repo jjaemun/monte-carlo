@@ -2,7 +2,7 @@
 #define EMPIRICAL_HPP
 
 
-#include <algorithm>
+#include <numeric>
 #include <cmath>
 #include <ranges>
 #include <vector>
