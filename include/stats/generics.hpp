@@ -72,11 +72,27 @@ class GenericSampleMoments {
         auto autocovariance(Args&&... args) {
 
             /**
-             * Computes the two-times empirical covariance 
-             * from process pathwise realisations.
+             * Computes the two-times (mixed) empirical 
+             * covariance from process pathwise realisations.
              */
 
             return static_cast<Class&>(*this).sc(std::forward<Args>(args)...);
+        } 
+};
+
+
+template<typename Class>
+class GenericTheoreticAutocorrelation {
+    public:
+        template <typename... Args>
+        auto operator()(Args&&... args) {
+            
+            /**
+             * Computes the process' correlation / normalised 
+             * theoretic covariance.
+             */
+
+            return static_cast<Class&>(*this).ac(std::forward<Args>(args)...);
         } 
 };
 
