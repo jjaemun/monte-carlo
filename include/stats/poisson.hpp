@@ -24,7 +24,8 @@ public GenericTheoreticMoments<PoissonMoments> {
         }
         
         auto fsm(const Poisson &poisson) const noexcept -> f64 {
-            return (f64)3.0 + ((f64)1.0 / poisson.intensity());
+            return (f64)3.0 + ((f64)1.0 / 
+                poisson.intensity());
         }
 };
 
