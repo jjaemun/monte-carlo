@@ -70,12 +70,42 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             
             return autocovariance;
         }
+    
+        auto ss(const std::vector<std::vector<f64>> &samples) const {
+            std::vector<f64> skewness{};
+            skewness.reserve(samples.size());
+
+            const auto means = sm(samples);
+            const auto variance = sv(samples);
+
+            for (const auto& [timestep, mean, var] :
+                    std::views::zip(samples, means, variance)) {
+                const auto paths = static_cast<f64>(timestep.size());
+
+                if (var <= (f64)0.0) {
+                    skewness.emplace_back((f64)0.0);
+                    continue;
+                }
+                
+                auto sum = (f64)0.0;
+                for (auto state : timestep) {
+                    auto diff = state - mean;
+                    sum += diff * diff * diff;
+                }
+          
+                // normalizing base.
+                const auto norm = std::pow(var, (f64)1.5);
+                skewness.emplace_back(sum / (paths * norm));
+            }
+
+            return skewness;
+        }
 };
 
 class SamplePearsonAutocorrelation : 
-public GenericSampleAutocorrelation<PearsonAutocorrelation> {
+public GenericSampleAutocorrelation<SamplePearsonAutocorrelation> {
     public:
-        auto spa(const std::vector<std::vector<f64>> &samples) const {
+        auto sac(const std::vector<std::vector<f64>> &samples) const {
             std::vector<std::vector<f64>> autocorrelation(samples.size());
             for (auto &v : autocorrelation) {
                 v.resize(samples.size()); 
@@ -110,9 +140,7 @@ public GenericSampleAutocorrelation<PearsonAutocorrelation> {
 
 
 class SampleSpearmanAutocorrelation : 
-public GenericSampleAutocorrelation<PearsonAutocorrelation> {
-
-};
+public GenericSampleAutocorrelation<SampleSpearmanAutocorrelation> {};
 
 
 #endif
