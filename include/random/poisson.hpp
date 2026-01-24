@@ -9,9 +9,12 @@
 
 template <typename RandomNumberGenerator>
 class Poisson : public StatisticalDistribution {
+        
+    std::poisson_distribution<u64> dist;
+
     public:
         explicit Poisson(RandomNumberGenerator& rng, f64 lambda) 
-            : rng(rng), dist(lambda) {}
+            : rng(rng), lambda(lambda), dist(lambda) {}
 
         auto sample(u64 n) override {
             std::vector<f64> samples(n);
@@ -22,9 +25,11 @@ class Poisson : public StatisticalDistribution {
             return samples;
         }
 
+        auto intensity(void) const noexcept -> f64 { return lambda; }
+
     private:
         RandomNumberGenerator &rng;
-        std::poisson_distribution<u64> dist;
+        f64 lambda;
 };
 
 

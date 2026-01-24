@@ -9,9 +9,12 @@
 
 template <typename RandomNumberGenerator>
 class Gaussian : public StatisticalDistribution {
+    
+    std::normal_distribution<f64> dist;
+
     public:
         explicit Gaussian(RandomNumberGenerator& rng, f64 mu, f64 sigma) 
-            : rng(rng), dist(mu,sigma) {}
+            : rng(rng), mu(mu), sigma(sigma), dist(mu,sigma) {}
 
         auto sample(u64 n) override {
             std::vector<f64> samples(n);
@@ -22,9 +25,12 @@ class Gaussian : public StatisticalDistribution {
             return samples;
         }
 
+        auto mean(void) const noexcept -> f64 { return mu; }
+        auto sdev(void) const noexcept -> f64 { return sigma; }
+
     private:
         RandomNumberGenerator &rng;
-        std::normal_distribution<f64> dist;
+        f64 mu, sigma;
 };
 
 
