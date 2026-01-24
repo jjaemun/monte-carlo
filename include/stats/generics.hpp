@@ -40,6 +40,28 @@ class GenericTheoreticMoments {
              */
 
             return static_cast<Class&>(*this).mscm(std::forward<Args>(args)...);
+        }         
+
+        template <typename... Args>
+        auto skewness(Args&&... args) {
+
+            /**
+             * Computes the process' (raw / n-normalised) third-order 
+             * standardised central moments.
+             */
+
+            return static_cast<Class&>(*this).tsm(std::forward<Args>(args)...);
+        } 
+        
+        template <typename... Args>
+        auto kurtosis(Args&&... args) {
+
+            /**
+             * Computes the process' (raw) fourth-order standardised
+             * central moments. **Not** excess kurtosis.
+             */
+
+            return static_cast<Class&>(*this).fsm(std::forward<Args>(args)...);
         } 
 };      
 
@@ -78,6 +100,28 @@ class GenericSampleMoments {
              */
 
             return static_cast<Class&>(*this).sc(std::forward<Args>(args)...);
+        }
+        
+        template <typename... Args>
+        auto skewness(Args&&... args) {
+
+            /**
+             * Computes the empirical process distribution
+             * symmetry form pathwise realizations.
+             */
+
+            return static_cast<Class&>(*this).ss(std::forward<Args>(args)...);
+        } 
+        
+        template <typename... Args>
+        auto kurtosis(Args&&... args) {
+
+            /**
+             * Computes the empirical process tailedness 
+             * form pathwise realizations.
+             */
+
+            return static_cast<Class&>(*this).sk(std::forward<Args>(args)...);
         } 
 };
 
