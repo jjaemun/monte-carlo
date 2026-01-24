@@ -109,7 +109,7 @@ public GenericSampleAutocorrelation<PearsonAutocorrelation> {
 };
 
 
-class SpearmanSampleAutocorrelation : 
+class SampleSpearmanAutocorrelation : 
 public GenericSampleAutocorrelation<PearsonAutocorrelation> {
 
 };
