@@ -121,7 +121,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
                 for (auto state : timestep) {
                     auto diff = state - mean;
                     sum += diff * diff * 
-                        diff *diff;
+                        diff * diff;
                 }
           
                 // normalizing base.
