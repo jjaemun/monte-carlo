@@ -6,7 +6,7 @@
 #include <ranges>
 #include <vector>
 
-#include "stats.hpp"
+#include "generics.hpp"
 
 
 class SampleMoments : public GenericSampleMoments<SampleMoments> {
