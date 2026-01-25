@@ -76,7 +76,7 @@ public GenericSampleMoments<SampleDistributionMoments> {
 
 class SampleMoments : public GenericSampleMoments<SampleMoments> {
     public:
-        auto sm(const std::vector<std::vector<f64>> &samples) {
+        auto sm(const std::vector<std::vector<f64>> &samples) const {
             std::vector<f64> means{};
             means.reserve(samples.size());
             for (const auto &timestep : samples) {
@@ -90,7 +90,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             return means;
         }
     
-        auto sv(const std::vector<std::vector<f64>> &samples) {
+        auto sv(const std::vector<std::vector<f64>> &samples) const {
             std::vector<f64> variance{};
             variance.reserve(samples.size());
             const auto means = sm(samples);
@@ -108,7 +108,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             return variance;
         }
 
-        auto sc(const std::vector<std::vector<f64>> &samples) {
+        auto sc(const std::vector<std::vector<f64>> &samples) const {
             std::vector<std::vector<f64>> autocovariance(samples.size());
             for (auto &v : autocovariance) {
                 v.resize(samples.size()); 
@@ -135,7 +135,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             return autocovariance;
         }
     
-        auto ss(const std::vector<std::vector<f64>> &samples) {
+        auto ss(const std::vector<std::vector<f64>> &samples) const {
             std::vector<f64> skewness{};
             skewness.reserve(samples.size());
 
@@ -165,7 +165,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             return skewness;
         }        
 
-        auto sk(const std::vector<std::vector<f64>> &samples) {
+        auto sk(const std::vector<std::vector<f64>> &samples) const {
             std::vector<f64> kurtosis{};
             kurtosis.reserve(samples.size());
 
@@ -201,7 +201,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
 class SamplePearsonAutocorrelation : 
 public GenericSampleAutocorrelation<SamplePearsonAutocorrelation> {
     public:
-        auto sac(const std::vector<std::vector<f64>> &samples) {
+        auto sac(const std::vector<std::vector<f64>> &samples) const {
             std::vector<std::vector<f64>> autocorrelation(samples.size());
             for (auto &v : autocorrelation) {
                 v.resize(samples.size()); 
