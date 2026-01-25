@@ -14,7 +14,7 @@
 class SampleDistributionMoments : 
 public GenericSampleMoments<SampleDistributionMoments> {
     public: 
-        auto sm(const std::vector<f64> &samples) const {
+        auto sm(const std::vector<f64> &samples) {
             const auto n = static_cast<f64>(samples.size());
             const auto sum =
                std::accumulate(samples.begin(), samples.end(), (f64)0.0);
@@ -22,7 +22,7 @@ public GenericSampleMoments<SampleDistributionMoments> {
             return sum / n;
         }
 
-        auto sv(const std::vector<f64> &samples) const {
+        auto sv(const std::vector<f64> &samples) {
             const auto n = static_cast<f64>(samples.size());
             const auto mean = sm(samples);
 
@@ -35,7 +35,7 @@ public GenericSampleMoments<SampleDistributionMoments> {
             return sum / (n - (f64)1.0);
         }
 
-        auto ss(const std::vector<f64> &samples) const {
+        auto ss(const std::vector<f64> &samples) {
             const auto n = static_cast<f64>(samples.size());
             const auto mean = sm(samples);
             const auto variance = sv(samples);
@@ -53,7 +53,7 @@ public GenericSampleMoments<SampleDistributionMoments> {
             return sum / (n * norm);
         }
 
-        auto sk(const std::vector<f64> &samples) const {
+        auto sk(const std::vector<f64> &samples) {
             const auto n = static_cast<f64>(samples.size());
             const auto mean = sm(samples);
             const auto variance = sv(samples);
@@ -76,7 +76,7 @@ public GenericSampleMoments<SampleDistributionMoments> {
 
 class SampleMoments : public GenericSampleMoments<SampleMoments> {
     public:
-        auto sm(const std::vector<std::vector<f64>> &samples) const {
+        auto sm(const std::vector<std::vector<f64>> &samples) {
             std::vector<f64> means{};
             means.reserve(samples.size());
             for (const auto &timestep : samples) {
@@ -90,7 +90,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             return means;
         }
     
-        auto sv(const std::vector<std::vector<f64>> &samples) const {
+        auto sv(const std::vector<std::vector<f64>> &samples) {
             std::vector<f64> variance{};
             variance.reserve(samples.size());
             const auto means = sm(samples);
@@ -108,7 +108,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             return variance;
         }
 
-        auto sc(const std::vector<std::vector<f64>> &samples) const {
+        auto sc(const std::vector<std::vector<f64>> &samples) {
             std::vector<std::vector<f64>> autocovariance(samples.size());
             for (auto &v : autocovariance) {
                 v.resize(samples.size()); 
@@ -135,7 +135,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             return autocovariance;
         }
     
-        auto ss(const std::vector<std::vector<f64>> &samples) const {
+        auto ss(const std::vector<std::vector<f64>> &samples) {
             std::vector<f64> skewness{};
             skewness.reserve(samples.size());
 
@@ -165,7 +165,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
             return skewness;
         }        
 
-        auto sk(const std::vector<std::vector<f64>> &samples) const {
+        auto sk(const std::vector<std::vector<f64>> &samples) {
             std::vector<f64> kurtosis{};
             kurtosis.reserve(samples.size());
 
@@ -201,7 +201,7 @@ class SampleMoments : public GenericSampleMoments<SampleMoments> {
 class SamplePearsonAutocorrelation : 
 public GenericSampleAutocorrelation<SamplePearsonAutocorrelation> {
     public:
-        auto sac(const std::vector<std::vector<f64>> &samples) const {
+        auto sac(const std::vector<std::vector<f64>> &samples) {
             std::vector<std::vector<f64>> autocorrelation(samples.size());
             for (auto &v : autocorrelation) {
                 v.resize(samples.size()); 
