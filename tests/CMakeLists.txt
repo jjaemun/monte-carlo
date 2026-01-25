@@ -12,10 +12,5 @@ FetchContent_MakeAvailable(googletest)
 
 include(GoogleTest)
 
-set(subdirectories 
-    random
-)
 
-foreach (dir IN LISTS subdirectories)
-    add_subdirectory($dir)
-endforeach()
+add_subdirectory(random)
