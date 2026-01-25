@@ -37,7 +37,6 @@ public GenericSampleMoments<SampleDistributionMoments> {
 
         auto ss(const std::vector<f64> &samples) const {
             const auto n = static_cast<f64>(samples.size());
-
             const auto mean = sm(samples);
             const auto variance = sv(samples);
 
@@ -56,7 +55,6 @@ public GenericSampleMoments<SampleDistributionMoments> {
 
         auto sk(const std::vector<f64> &samples) const {
             const auto n = static_cast<f64>(samples.size());
-
             const auto mean = sm(samples);
             const auto variance = sv(samples);
 
