@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "generics.hpp"
+#include "types.hpp"
 
 
 class SampleMoments : public GenericSampleMoments<SampleMoments> {
