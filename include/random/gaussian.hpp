@@ -1,7 +1,7 @@
 #ifndef GAUSSIAN_HPP
 #define GAUSSIAN_HPP
 
-
+#include <random>
 #include <utility>
 
 #include "distribution.hpp"
