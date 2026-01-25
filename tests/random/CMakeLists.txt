@@ -12,3 +12,17 @@ target_link_libraries(
 )
 
 gtest_discover_tests(rngtests)
+
+
+add_executable(
+    disttests
+    disttests.cpp
+)
+
+target_link_libraries(
+    disttests PRIVATE
+    GTest::gtest_main
+    mc
+)
+
+gtest_discover_tests(disttests)

@@ -9,7 +9,7 @@
 
 
 namespace detail {
-    static const u64 seed = 0xff;
+    static constexpr u64 seed = 0xff;
 } // namespace detail.
 
 
