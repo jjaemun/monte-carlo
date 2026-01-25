@@ -20,7 +20,8 @@ public GenericTheoreticMoments<PoissonMoments> {
         }
 
         f64 tsm(const Poisson &poisson) const noexcept {
-            return (f64)1.0 / std::sqrt(poisson.intensity());
+            return (f64)1.0 / 
+                std::sqrt(poisson.intensity());
         }
         
         f64 fsm(const Poisson &poisson) const noexcept {
