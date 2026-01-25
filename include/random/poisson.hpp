@@ -16,10 +16,10 @@ class Poisson : public StatisticalDistribution {
         explicit Poisson(RandomNumberGenerator& rng, f64 lambda) 
             : rng(rng), lambda(lambda), dist(lambda) {}
 
-        auto sample(u64 n) override {
+        std::vector<f64> sample(u64 n) override {
             std::vector<f64> samples(n);
             for (auto &sample : samples) {
-                sample = static_cast<f64>(dist(rng()));
+                sample = static_cast<f64>(dist(rng));
             }
 
             return samples;
