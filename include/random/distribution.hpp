@@ -11,7 +11,7 @@
 class StatisticalDistribution {
     public:
         virtual ~StatisticalDistribution() = default;
-        virtual auto sample(u64 n) = 0;
+        virtual std::vector<f64> sample(u64 n) = 0;
 };
 
 #endif
