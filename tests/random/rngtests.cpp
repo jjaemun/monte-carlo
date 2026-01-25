@@ -53,8 +53,8 @@ TEST(rngtest, TrivialDeterministicallyReproducibleSequence) {
 
 TEST(rngtest, TrivialSeedDependentSequence) {
          
-    /* @test TrivialSeedDependentSequence: trivially checks behavior
-            is preserved accross seeds. */
+    /* @test TrivialSeedDependentSequence: trivially checks different 
+            seeds yield different sequences. */
 
     RandomNumberGenerator rng1(std::mt19937{detail::seed});
     RandomNumberGenerator rng2(std::mt19937{detail::seed + 1});
