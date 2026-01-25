@@ -1,5 +1,5 @@
-#ifndef STATS_GAUSSIAN_HPP
-#define STATS_GAUSSIAN_HPP
+#ifndef STATS_POISSON_HPP
+#define STATS_POISSON_HPP
 
 
 #include <cmath>
