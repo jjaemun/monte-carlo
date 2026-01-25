@@ -13,10 +13,10 @@ namespace detail {
 } // namespace detail.
 
 
-TEST(rngtest, TrivialRandomGeneration) {
+TEST(rngtest, TrivialNonDegenerateSequence) {
     
-    /* @test TrivialRandomGeneration: trivially checks random
-            number yields from rng class. */
+    /* @test TrivialNonDegenerateSequence: trivially checks rng class
+            as a non-degenerate source of entropy. */
 
     RandomNumberGenerator rng(std::mt19937{detail::seed});
 
@@ -34,10 +34,10 @@ TEST(rngtest, TrivialRandomGeneration) {
 }
 
 
-TEST(rngtest, TrivialReproducibility) {
+TEST(rngtest, TrivialDeterministicallyReproducibleSequence) {
         
-    /* @test TrivialReproducibility: trivially checks behavior
-            is preserved accross seeds. */
+    /* @test TrivialDeterministically...: checks behavior is preserved
+           accross rng objects sharing a same seed. */
 
     RandomNumberGenerator rng1(std::mt19937{detail::seed});
     RandomNumberGenerator rng2(std::mt19937{detail::seed});
@@ -51,9 +51,9 @@ TEST(rngtest, TrivialReproducibility) {
 }
 
 
-TEST(rngtest, TrivialIndependence) {
+TEST(rngtest, TrivialSeedDependentSequence) {
          
-    /* @test TrivialIndependence: trivially checks behavior
+    /* @test TrivialSeedDependentSequence: trivially checks behavior
             is preserved accross seeds. */
 
     RandomNumberGenerator rng1(std::mt19937{detail::seed});
@@ -61,7 +61,10 @@ TEST(rngtest, TrivialIndependence) {
 
     bool cmpeq = false;
     for (auto i : std::views::iota(0, 1e4)) {
-          cmpeq &= (rng1() == rng2());
+        if (rng1() == rng2()) {
+            cmpeq = true;
+            break;
+        }
     }
 
     ASSERT_FALSE(cmpeq);
