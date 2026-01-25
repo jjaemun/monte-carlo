@@ -18,11 +18,11 @@ public GenericTheoreticMoments<GaussianMoments> {
             return sdev * sdev;
         }
 
-        consteval f64 tsm(const Gaussian &gaussian) const noexcept {
+        constexpr f64 tsm(const Gaussian &gaussian) const noexcept {
             return (f64)0.0;
         }
         
-        consteval f64 fsm(cosnt Gaussian &gaussian) const noexcept {
+        constexpr f64 fsm(cosnt Gaussian &gaussian) const noexcept {
             return (f64)3.0;
         }
 };
