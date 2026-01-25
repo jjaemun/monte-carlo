@@ -36,15 +36,15 @@ TEST(rngtest, TrivialRandomGeneration) {
 
 TEST(rngtest, TrivialReproducibility) {
         
-    /* @test TrivialRandomGeneration: trivially checks behavior
+    /* @test TrivialReproducibility: trivially checks behavior
             is preserved accross seeds. */
 
     RandomNumberGenerator rng1(std::mt19937{detail::seed});
     RandomNumberGenerator rng2(std::mt19937{detail::seed});
 
-    bool cmpeq = false;
+    bool cmpeq = true;
     for (auto i : std::views::iota(0, 1e4)) {
-          cmpeq = (rng1() == rng2());
+          cmpeq &= (rng1() == rng2());
     }
 
     ASSERT_TRUE(cmpeq);
@@ -53,7 +53,7 @@ TEST(rngtest, TrivialReproducibility) {
 
 TEST(rngtest, TrivialIndependence) {
          
-    /* @test TrivialRandomGeneration: trivially checks behavior
+    /* @test TrivialIndependence: trivially checks behavior
             is preserved accross seeds. */
 
     RandomNumberGenerator rng1(std::mt19937{detail::seed});
@@ -61,7 +61,7 @@ TEST(rngtest, TrivialIndependence) {
 
     bool cmpeq = false;
     for (auto i : std::views::iota(0, 1e4)) {
-          cmpeq = (rng1() == rng2());
+          cmpeq &= (rng1() == rng2());
     }
 
     ASSERT_FALSE(cmpeq);
