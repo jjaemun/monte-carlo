@@ -46,7 +46,12 @@ void test(TestDistribution *dist, TheoreticMoments&& theoretic) {
 }
 
 TEST(disttest, StatisticalMomentsCorrectness) {
+
+    /* @test Satatistical...: checkes whether drawn samples converge
+            to distribution theoretical moments. */
+
     RandomNumberGenerator rng{ std::mt19937(detail::seed) };
+
     Gaussian gaussian {rng, 0.0, 1.0};
     Poisson poisson{rng, 2.0};
 
