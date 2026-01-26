@@ -14,7 +14,7 @@
 
 
 namespace detail {
-    static constexpr u64 seed = 0xff;
+    static constexpr u64 seed = (u64)0xff;
     static constexpr u64 ssize = (u64)2e6;
     static constexpr f64 tol = (f64)1e-2;
 } // namespace detail.
