@@ -37,14 +37,14 @@ flexibility are achieved and tested for the system design.
 
 ## TODO!
 ```
-+---------------------------------+----------------------------------------+
-| Task                            | Status                                 |
-+---------------------------------+----------------------------------------+
-| blockwise operations            | design iteration / partitioning logic  |
-| stats interfaces                | define CRTP-based sample & theoretic   |
-| driver redesign                 | rethink multi-simulator orchestration  |
-| caching                         | plan random deviate reuse / memory     |
-+---------------------------------+----------------------------------------+
++---------------------------------+-----------------------------------------+
+| Task                            | Status                                  |
++---------------------------------+-----------------------------------------+
+| noise layer redesign            | owned resources, antithetic, correlated |
+| simulator design                | contract? configs?                      |
+| driver redesign                 | rethink multi-simulator orchestration   |
+| caching (deferred)              | plan random deviate reuse / memory      |
++---------------------------------+-----------------------------------------+
 ```
 
 
