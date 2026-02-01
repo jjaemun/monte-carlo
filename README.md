@@ -1,11 +1,12 @@
 # monte-carlo!
 
+`monte-carlo` is `in progress...`. 
+
 ## Overview 
 
 `monte-carlo` develops an options pricing library in `c++`. The framework follows from the 
 general valuation formula under a frictionless security market with continuous trading.
 
-`monte-carlo` is `in progress...`. 
 
 ## Objectives
 
@@ -21,17 +22,17 @@ we may avoid awkwardly stumbling around the theory and direct our attention to d
 
 ## Thoughts & comments
 
+It is hard to scope the project, so we will loosely define the intended coverage. After all,
+it is unlikely that I can develop a fully-featured library in a reasonable amount of time.
+For now, a first iteration should include the minimal pipeline to price vanilla european options,
+but evry phase must be a suitable recipient to extension. Scaffolding rather than features.
 
-There is little more to say than the fact
-that there is still way too much work ahead. Just recently I changed the project
-scope entirely, in favour of a clarity-and-correctness-first, pure `stl` approach. 
-This is motivated by at least two desires. To familiarise myself with the 
-provided algorithms, mechanisms etc provided in the `stl` (even if some sections
-showcase excessive emphasis on `stl` machinery); and, to create a 
-solid foundation for later development - a benchmark of sorts. The extension to 
-different backends is natural beyond that point, along with the effort it takes
-to optimize the existing code. This is reflected in the presence of generics throughout.
-For now, naive-but-readable dominates. 
+The project will develop in phases. Briefly, the current phase is concerned with a 
+clarity-and-correctness-first approach. It will serve as a baseline to improve upon.
+This is reflected in the usage of the `stl`. From this phase out, the extension to different
+backends is natural. There are no clear directions in that regard, but it is unlikely to 
+dip into gpu territory. Lastly, software optimizations will come in, once the desired generality,
+flexibility are achieved and tested for the system design.  
 
 
 ## TODO!
