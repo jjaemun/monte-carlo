@@ -39,7 +39,7 @@ desired generality and flexibility are achieved and tested for the system design
 ### Random number generation
 
 Random number generation is a non-trivial element of any monte carlo framework, and is
-currently among the more dynamic organs of the system. The discussion below explores
+currently among the more dynamic organs in the system. The discussion below explores
 its main pain points.
 
 #### Sampling strategies
