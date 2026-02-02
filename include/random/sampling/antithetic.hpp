@@ -5,29 +5,11 @@
 #include <type_traits>
 
 #include "random/distribution.hpp"
+#include "sampler.hpp"
 #include "types.hpp"
 
 
-class AntitheticSampler final {
-
-    /*
-     * A general form for antithetic sampling cannot be constructed in
-     * sample space. 
-     *
-     * In order that distribution symmetry need not be assumed, it must
-     * be informed of the underlying distirbution and the inverse cdf. 
-     * 
-     * This constraint suggests that any architecture where statistical
-     * distributions preceed variance reduction strategies is therefore 
-     * limited by definition of its own abstractions. At the very least
-     * not without awkwardly deferring computations to accomodate all 
-     * logic at an appropriate level, or by adding more code that will
-     * cover the remaining cases.
-     *
-     * The same implication holds quasi-monte-carlo methods or stratified 
-     * sampling, seeing that they also work in probability space. 
-    */
-
+class AntitheticSampler final : public Sampler {
     public:
         AntitheticSampler(StatisticalDistribution *dist) : dist(dist) {}
     
