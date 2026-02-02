@@ -4,8 +4,8 @@
 
 ## Overview 
 
-`monte-carlo` develops an options pricing library in `c++`. The framework follows from the 
-general valuation formula under a frictionless security market with continuous trading.
+`monte-carlo` develops an options pricing library in `c++`. The framework follows from 
+the general valuation formula under a frictionless security market with continuous trading.
 
 
 ## Objectives
@@ -13,8 +13,8 @@ general valuation formula under a frictionless security market with continuous t
 This project is inteded as a practical exercise. Its subject is systems design, 
 though it is not entirely uninterested in the numerical quality of the results. 
 That is, it will try to find a suitable abstraction boundary for a monte-carlo 
-simulation system, and it just happens that it will (hopefully) produce some result 
-while doing so. Naturally these should comfirm implementation (in)correctness, 
+simulation system, and it just happens that it will (hopefully) produce some 
+result while doing so. Naturally these should comfirm implementation (in)correctness, 
 but the discussion will drift away from them. 
 
 The choice of monte-carlo pricing is intentional. Because it is an established problem,
