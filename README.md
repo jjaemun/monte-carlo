@@ -10,11 +10,11 @@ the general valuation formula under a frictionless security market with continuo
 
 ## Objectives
 
-This project is inteded as a practical exercise. Its subject is systems design, 
+This project is intended as a practical exercise. Its subject is systems design, 
 though it is not entirely uninterested in the numerical quality of the results. 
 That is, it will try to find a suitable abstraction boundary for a monte-carlo 
 simulation system, and it just happens that it will (hopefully) produce some 
-result while doing so. Naturally these should comfirm implementation (in)correctness, 
+result while doing so. Naturally these should confirm implementation (in)correctness, 
 but the discussion will drift away from them. 
 
 The choice of monte-carlo pricing is intentional. Because it is an established problem,
@@ -52,7 +52,7 @@ it is well defined.
 
 This constraint suggests that any architecture where statistical distributions preceed
 variance reduction strategies is therefore limited by definition of its own abstractions.
-At the very least, not without clumsily deferring computations to accomodate all logic
+At the very least, not without clumsily deferring computations to accommodate all logic
 at an appropriate level, or by forking functionality according to each distribution.
 
 The same implication holds for quasi-monte-carlo methods or stratified sampling 
