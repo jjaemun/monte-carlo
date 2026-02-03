@@ -14,8 +14,8 @@
 class Transform {
     public:
         virtual ~Transform() = default;
-        virtual void forward(std::vector<f64> &data) = 0;
-        virtual void inverse(std::vector<f64> &data) = 0;
+        virtual void forward(std::vector<std::vector<f64>> &data) = 0;
+        virtual void inverse(std::vector<std::vector<f64>> &data) = 0;
 };
 
 
@@ -28,13 +28,13 @@ class Composite final : public Transform {
         explicit Composite(std::unique_ptr<Transforms>... transforms) 
             : transforms{ std::move(transforms)... } {}
 
-        void forward(std::vector<f64> &data) override {
+        void forward(std::vector<std::vector<f64>> &data) override {
             for (auto &tform : transforms) {
                 tform->forward(data);
             }
         }
 
-        void inverse(std::vector<f64> &data) override {
+        void inverse(std::vector<std::vector<f64>> &data) override {
             for (auto &tform : transforms | std::views::reverse) {
                  tform->inverse(data);
             }
