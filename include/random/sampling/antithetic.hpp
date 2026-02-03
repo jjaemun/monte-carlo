@@ -22,10 +22,8 @@ class AntitheticSampler final : public Sampler {
                 antithetics.push_back(-sample);
             }
 
-            if (n & 1) {
-                antithetics.push_back(
-                    dist->sample(1).front());
-            }
+            if (n & 1) 
+                antithetics.push_back(dist->sample(1).front());
 
             return antithetics;
         }
