@@ -37,10 +37,8 @@ class CholeskyDecomposition final : public Transform {
                             ERROR("matrix not positive definite.");
                             std::exit(-999);
                         }
-
                         data[i][j] = std::sqrt(diag);
                     }
-                
                     else 
                         data[i][j] = (data[i][j] - sum) /
                             data[j][j];
