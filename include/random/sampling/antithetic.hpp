@@ -2,11 +2,7 @@
 #define ANTITHETIC_HPP
 
 
-#include <type_traits>
-
-#include "random/distribution.hpp"
 #include "sampler.hpp"
-#include "types.hpp"
 
 
 class AntitheticSampler final : public Sampler {
