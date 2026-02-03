@@ -7,13 +7,14 @@
 
 class AntitheticSampler final : public Sampler {
     public:
-        AntitheticSampler(StatisticalDistribution *dist) : dist(dist) {}
+        explicit AntitheticSampler(StatisticalDistribution *dist) 
+            : dist(dist) {}
     
         std::vector<f64> sample(u64 n) override {
             std::vector<f64> antithetics{};
             antithetics.reserve(n);
 
-            const auto half = static_cast<u64>(n / 2); 
+            const auto half = n / (u64)2; 
 
             const auto samples = dist->sample(half);
             for (const auto &sample : samples) {
@@ -23,8 +24,7 @@ class AntitheticSampler final : public Sampler {
 
             if (n & 1) {
                 antithetics.push_back(
-                    dist->sample(1).front()
-                );
+                    dist->sample(1).front());
             }
 
             return antithetics;
