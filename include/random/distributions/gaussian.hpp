@@ -38,7 +38,7 @@ class Gaussian : public StatisticalDistribution {
 class GaussianPolarBoxMuller final {
     public:
         std::vector<f64> 
-        operator()(const std::vector<f64> &uniforms) const noexcept {
+        operator()(const std::vector<f64> &uniforms) const {
             const u64 n = uniforms.size();
 
             std::vector<f64> samples{};
