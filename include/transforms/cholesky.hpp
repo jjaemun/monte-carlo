@@ -38,7 +38,7 @@ class CholeskyDecomposition final : public Transform {
                     else 
                         data[i][j] = (data[i][j] - sum) /
                             data[j][j];
-                    }
+                }
 
                 for (auto j : std::views::iota(i + 1, n))
                         data[i][j] = (f64)0.0;
@@ -54,9 +54,9 @@ class CholeskyDecomposition final : public Transform {
 
             for (auto i : std::views::iota((u64)0, n)) {
                 for (auto j : std::views::iota((u64)0, i + 1)) {
-                    auto sum = (f64)0.0;
-
                     const auto min = std::min(i, j);
+
+                    auto sum = (f64)0.0;
                     for (auto k : std::views::iota((u64)0, (u64)min)) 
                         sum += data[i][k] * data[j][k];
                
