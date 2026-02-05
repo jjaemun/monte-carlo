@@ -37,7 +37,8 @@ class Gaussian : public StatisticalDistribution {
 
 class GaussianBoxMuller final {
     public:
-        std::vector<f64> operator()(const std::vector<f64> &uniforms) const {
+        std::vector<f64> 
+        operator()(const std::vector<f64> &uniforms) const {
             std::vector<f64> samples{};
             samples.reserve(uniforms.size());
 
