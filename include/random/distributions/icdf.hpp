@@ -9,10 +9,10 @@
 #include "types.hpp"
 
 
-class InverseCumulativeDistributionFunction {
+class InverseCumulativeDistribution {
     public:
-        virtual ~InverseCumulativeDistributionFunction() = default;
-        virtual f64 operator()(const u64 n) const = 0;
+        virtual ~InverseCumulativeDistribution() = default;
+        virtual f64 operator()(const f64 n) const = 0;
 };
 
 
