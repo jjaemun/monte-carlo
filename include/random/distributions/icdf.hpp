@@ -2,6 +2,7 @@
 #define ICDF_HPP 
 
 #include <cmath>
+#include <limits>
 #include <numbers>
 #include <ranges>
 #include <vector>
@@ -24,8 +25,10 @@ class GaussianInverseCumulativeWichura : public InverseCumulativeDistribution {
             const auto split1 = (f64)0.425e0; 
             const auto split2 = (f64)5.0e0; 
 
+            const auto ONE = (f64)1.0;
             const auto const1 = (f64)0.180625e0; 
-            const auto const2 = (f64)1.6e0; 
+            const auto const2 = (f64)1.6e0;
+
 
             // coeffs. for u close to 1/2.
             const auto A0 = (f64)3.3871328727963666080e0;
@@ -104,7 +107,7 @@ class GaussianInverseCumulativeWichura : public InverseCumulativeDistribution {
                 denom = std::fma(denom, R, B3);
                 denom = std::fma(denom, R, B2);
                 denom = std::fma(denom, R, B1);
-                denom = std::fma(denom, R, (f64)1.0);
+                denom = std::fma(denom, R, ONE);
                 
                 return Q * num / denom;
             }
@@ -136,7 +139,7 @@ class GaussianInverseCumulativeWichura : public InverseCumulativeDistribution {
                     denom = std::fma(denom, R, D3);
                     denom = std::fma(denom, R, D2);
                     denom = std::fma(denom, R, D1);
-                    denom = std::fma(denom, R, (f64)1.0);
+                    denom = std::fma(denom, R, ONE);
                      
                     ret = num / denom; 
                 }
@@ -160,7 +163,7 @@ class GaussianInverseCumulativeWichura : public InverseCumulativeDistribution {
                     denom = std::fma(denom, R, F3);
                     denom = std::fma(denom, R, F2);
                     denom = std::fma(denom, R, F1);
-                    denom = std::fma(denom, R, (f64)1.0);
+                    denom = std::fma(denom, R, ONE);
                     
                     ret = num / denom;
             }
