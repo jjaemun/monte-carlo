@@ -35,26 +35,23 @@ class Gaussian : public StatisticalDistribution {
 };
 
 
-class GaussianPolarBoxMuller final {
+class GaussianBoxMuller final {
     public:
-        std::vector<f64> 
-        operator()(const std::vector<f64> &uniforms) const {
-            const u64 n = uniforms.size();
-
+        std::vector<f64> operator()(const std::vector<f64> &uniforms) const {
             std::vector<f64> samples{};
-            samples.reserve(n);
+            samples.reserve(uniforms.size());
 
             for (auto& pair : uniforms | std::views::chunk(2)) {
                 const auto u1 = pair.front();
                 const auto u2 = pair.back();
 
-                const auto radius = 
+                const auto factor = 
                     std::sqrt((f64)-2.0 * std::log(u1));
                 const auto theta = 
                     (f64)2.0 * std::numbers::pi * u2;
 
-                samples.push_back(radius * std::cos(theta));
-                samples.push_back(radius * std::sin(theta));
+                samples.push_back(factor * std::cos(theta));
+                samples.push_back(factor * std::sin(theta));
             }
 
             return samples;
