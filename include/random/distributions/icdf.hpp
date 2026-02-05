@@ -15,7 +15,6 @@ class InverseCumulativeDistribution {
         virtual f64 operator()(const f64 n) const = 0;
 };
 
-
 class GaussianInverseCumulativeWichura : public InverseCumulativeDistribution {
     
     /* ALGO. AS241 APPL. STATIST. (1988) VOL.37, NO 3 */
@@ -78,9 +77,100 @@ class GaussianInverseCumulativeWichura : public InverseCumulativeDistribution {
             const auto F5 = (f64)1.84631831751005468180e-5;
             const auto F6 = (f64)1.42151175831644588870e-7;
             const auto F7 = (f64)2.04426310338993978564e-15;
+
+            if (u <= (f64)0.0) 
+                return -std::numeric_limits<f64>::infinity();
+
+            if (u >= (f64)1.0)
+                return std::numeric_limits<f64>::infinity();
+
+            const auto Q = u - (f64)(1.0 / 2.0);
+            if (std::abs(Q) <= split1) {
+                const f64 R = const1 - Q * Q;
+    
+                auto num = A7; 
+                num = std::fma(num, R, A6);
+                num = std::fma(num, R, A5);
+                num = std::fma(num, R, A4);
+                num = std::fma(num, R, A3);
+                num = std::fma(num, R, A2);
+                num = std::fma(num, R, A1);
+                num = std::fma(num, R, A0);
+
+                auto denom = B7;
+                denom = std::fma(denom, R, B6);
+                denom = std::fma(denom, R, B5);
+                denom = std::fma(denom, R, B4);
+                denom = std::fma(denom, R, B3);
+                denom = std::fma(denom, R, B2);
+                denom = std::fma(denom, R, B1);
+                denom = std::fma(denom, R, (f64)1.0);
+                
+                return Q * num / denom;
+            }
+
+            else {
+                f64 R{};
+                if (Q < 0.0)
+                    R = std::sqrt(-std::log(u));
+                else 
+                    R = std::sqrt(-std::log((f64)1.0 - u));
+
+                f64 ret{};
+                if (R < split2) {
+                    R -= const2;
+    
+                    auto num = C7; 
+                    num = std::fma(num, R, C6);
+                    num = std::fma(num, R, C5);
+                    num = std::fma(num, R, C4);
+                    num = std::fma(num, R, C3);
+                    num = std::fma(num, R, C2);
+                    num = std::fma(num, R, C1);
+                    num = std::fma(num, R, C0);
+
+                    auto denom = D7;
+                    denom = std::fma(denom, R, D6);
+                    denom = std::fma(denom, R, D5);
+                    denom = std::fma(denom, R, D4);
+                    denom = std::fma(denom, R, D3);
+                    denom = std::fma(denom, R, D2);
+                    denom = std::fma(denom, R, D1);
+                    denom = std::fma(denom, R, (f64)1.0);
+                     
+                    ret = num / denom; 
+                }
+
+                else {
+                    R -= split2;
+     
+                    auto num = E7; 
+                    num = std::fma(num, R, E6);
+                    num = std::fma(num, R, E5);
+                    num = std::fma(num, R, E4);
+                    num = std::fma(num, R, E3);
+                    num = std::fma(num, R, E2);
+                    num = std::fma(num, R, E1);
+                    num = std::fma(num, R, E0);
+
+                    auto denom = F7;
+                    denom = std::fma(denom, R, F6);
+                    denom = std::fma(denom, R, F5);
+                    denom = std::fma(denom, R, F4);
+                    denom = std::fma(denom, R, F3);
+                    denom = std::fma(denom, R, F2);
+                    denom = std::fma(denom, R, F1);
+                    denom = std::fma(denom, R, (f64)1.0);
+                    
+                    ret = num / denom;
+            }
+            
+            if (Q < (f64)0.0)
+                return -ret;
+
+            return ret;
         }
-            
+    }
 };
-            
 
 #endif
