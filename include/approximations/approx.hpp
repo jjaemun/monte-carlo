@@ -8,6 +8,7 @@
 
 #include "utitilities.hpp"
 
+
 template <typename... Coeffs>
 class Polynomial {
 
@@ -32,3 +33,5 @@ class Polynomial {
         std::array<type<Coeffs...>, pack_size<Coeffs...>> coeffs;
 };
 
+
+#endif
