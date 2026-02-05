@@ -13,34 +13,33 @@ the general valuation formula under a frictionless security market with continuo
 This project is intended as a practical exercise. Its subject is systems design, 
 though it is not entirely uninterested in the numerical quality of the results. 
 That is, it will try to find a suitable abstraction boundary for a monte-carlo 
-simulation system, and it just happens that it will (hopefully) produce some 
-result while doing so. Naturally these should confirm implementation (in)correctness, 
+simulation system, and it just happens that it will produce some 
+results while doing so. Naturally these should confirm implementation correctness, 
 but the discussion will drift away from them. 
 
-The choice of monte-carlo pricing is intentional. Because it is an established problem,
-we may avoid awkwardly stumbling around the theory and direct our attention to design.
+Its dealing with monte-carlo pricing is then intentional. Because it is an established 
+problem in the theory of mathematical finance, it affords directing significant attention
+to design. 
+
+For purposes of documentation, we may be formal sometimes, informal some others,
+or even ommit mathematical definitions altogether. Typeset supplementary material
+will be provided where pertinent, but the expectation from the reader is that of intimate 
+familiarity with the topic. 
 
 ## Scope
-
-It is hard to scope the project. After all, it is unlikely that I can develop a 
-fully-featured library in a reasonable amount of time. For now, a first iteration 
-should include the minimal pipeline to price vanilla european options, but every 
-stage must be a suitable recipient for extensions. Scaffolding rather than features.
-
-The project will develop in phases. Briefly, the first and  current phase is concerned 
-with a clarity-and-correctness-first approach. It will serve as a baseline to improve upon.
-This is reflected in the heavy usage of the `stl`. From this phase out, the extension to 
-different backends is natural. There are no clear directions in this regard, but it is 
-unlikely to dip into gpu territory. Lastly, software optimizations will come in, once the 
-desired generality and flexibility are achieved and tested for the system design.  
+`[redacted]`
 
 ## Thoughts & comments
 
 ### Random number generation
 
 Random number generation is a non-trivial element of any monte carlo framework, and is
-currently among the more dynamic organs in the system. The discussion below explores
-its main pain points.
+currently among the more dynamic organs in the system. This section addresses the
+concerns that consequently arise 
+There are a score of methods and 
+algorithms to generate random deviates with an equal claim to be called vital in such a 
+context. 
+ .
 
 #### Sampling strategies
 
