@@ -11,18 +11,17 @@ the general valuation formula under a frictionless security market with continuo
 ## Objectives
 
 This project is intended as a practical exercise. Its subject is systems design, 
-though it is not uninterested in the numerical quality of the results. 
+though without loosing interest in the numerical quality of the results. 
 That is, it will try to find a suitable abstraction boundary for a monte-carlo 
 simulation system, and it just happens that it will produce some 
-results while doing so. Naturally these should confirm implementation correctness, 
+results while doing so. Naturally, these should confirm implementation correctness, 
 but the discussion will drift away from them. 
 
 Its dealing with monte-carlo pricing is then intentional. As an established 
 problem in mathematical and computational finance, it affords directing significant attention
 to design. After all, whoever sets to describe in adequate treatment the theory of
-monte carlo simulations in less than a large volume faces an almost impossible task, unless 
-they are willing to lie about it, or suggest that it is a deeply irrelevant topic - neither of 
-which I am ready to commit. 
+monte carlo methods in less than a large volume must be willing to lie about it 
+or suggest that it is a deeply irrelevant topic - neither of which I am ready to commit. 
 
 And so, for purposes of documentation, we may be formal sometimes, informal some others,
 or even ommit mathematical definitions altogether. Typeset supplementary material
@@ -37,12 +36,11 @@ familiarity with the topic.
 ### Random number generation
 
 Random number generation is a non-trivial element of any monte carlo framework, and is
-currently among the more dynamic organs in the system. This section addresses the
-concerns that arise consequent to that exploration. 
-There are a score of methods and 
-algorithms to generate random deviates with an equal claim to be called vital in such a 
-context. 
- .
+currently among the more dynamic organs in the system. This section addresses
+concerns about both of those qualities. 
+
+There are a score of methods and algorithms to generate random deviates with an 
+equal claim to be called vital...
 
 #### Sampling strategies
 
