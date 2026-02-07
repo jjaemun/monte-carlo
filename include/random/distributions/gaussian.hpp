@@ -1,11 +1,12 @@
 #ifndef GAUSSIAN_HPP
 #define GAUSSIAN_HPP
 
+
 #include <random>
 #include <utility>
 
 #include "distribution.hpp"
-#include "transforms/tform.hpp"
+#include "icdf.hpp"
 
 
 template <typename RandomNumberGenerator>
@@ -61,3 +62,6 @@ class GaussianBoxMuller final {
 
 
 #endif
+
+
+// check Beasly and Springer, 1977. (PPND of AS 111)
