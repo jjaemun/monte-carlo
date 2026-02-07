@@ -2,11 +2,7 @@
 #define KERNEL_HPP
 
 
-#include <cmath>
-
-#include "algorithm.hpp"
-#include "utilities.hpp"
-#include "random.hpp"
+#include <utility>
 
 
 template <typename functor>
@@ -16,9 +12,9 @@ class kernel {
     using Ret = decltype(std::declval<functor>()(std::declval<Args>()...));
 
     public:
-        template <typename... Args>
-        auto simulate(Args&&... args) const -> Ret<Args...> {
-            return down_cast<functor>(*this)(std::forward<Args>(args)...); 
+        template <typename... Args> __attribute__((always_inline))
+        constexpr auto evaluate(Args&&... args) const noexcept -> Ret<Args...> {
+            return static_cast<functor>(*this)(std::forward<Args>(args)...); 
         }
 };
 
