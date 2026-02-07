@@ -52,7 +52,7 @@ it is well defined.
 
 This constraint suggests that any architecture where statistical distributions preceed
 variance reduction strategies is therefore limited by definition of its own abstractions.
-At the very least, not without clumsily deferring computations to accommodate all logic
+At the very least, not without deferring computations to accommodate all logic
 at an appropriate level, or by forking functionality according to each distribution.
 
 The same implication holds for quasi-monte-carlo methods or stratified sampling 
