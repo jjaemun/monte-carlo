@@ -19,17 +19,6 @@ class Polynomial {
 
     public:
         Polynomial(const Coeffs&... coeffs) : coeffs{ coeffs... } {}
-
-        __attribute__((always_inline))
-        constexpr type<Coeffs...> operator()(const type<Coeffs...> u) const noexcept {
-            auto ret = (type<Coeffs...>)0.0; 
-            for (const auto &coeff : coeffs | std::views::reverse) 
-               ret = std::fma(ret, u, coeff);  
-            
-            return ret;
-        }
-
-    private:
         std::array<type<Coeffs...>, pack_size<Coeffs...>> coeffs;
 };
 
