@@ -11,27 +11,18 @@ class AntitheticSampler final : public Sampler {
      * Constructs pairwise antithetic coupling (Hammersley and Morton, 1956), 
      * under standard uniform distribution. 
      */
-    
-    private:
-
-       /**
-        * Copies and multiple-construction of distributions are usually 
-        * cheap, in opposite to random engines, which should be initialised 
-        * once per thread (~~rarely, synchronized across them). 
-        */ 
-
-        UniformDistribution *distribution;
-
-       /**
-        * Standard marginal uniformity is trivially satisfied in one-dimensional 
-        * case. 
-        */ 
-
 
     public:
         explicit AntitheticSampler(UniformDistribution *distribution) 
             : distribution(distribution) {}
+
         std::vector<f64> sample(u64 n) override {
+ 
+            /**
+             * Standard marginal uniformity is trivially satisfied in the 
+             * one-dimensional case. 
+             */           
+            
             std::vector<f64> antithetics{};
             antithetics.reserve(n);
 
@@ -48,7 +39,16 @@ class AntitheticSampler final : public Sampler {
 
             return antithetics;
         }
+    
+    private:
 
+       /**
+        * Copies and multiple-construction of distributions are usually 
+        * cheap, in opposite to random engines, which should be initialised 
+        * once per thread (~~rarely also synchronized across them). 
+        */ 
+
+        UniformDistribution *distribution;
 };
 
 #endif 
