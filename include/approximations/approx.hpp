@@ -25,19 +25,20 @@ class Polynomial {
 
     public:
         Polynomial(const Coeffs&... coeffs) : coeffs{ coeffs... } {}
-    
-        /**
-         * If available, forcing inline improves performance, but is 
-         * generally superfluous. It neither seems to propagate beyond 
-         * the function scope in a way that interferes with general 
-         * optimizations at compile-time.
-         */
 
         #if defined(__GNUC__) || defined(__clang__)
         __attribute__((always_inline))
         #endif
         constexpr type<Coeffs...> operator()(const type<Coeffs...> u) const noexcept {
-            auto ret = (type<Coeffs...>)0.0; 
+     
+            /**
+            * If available, forcing inline improves performance, but is 
+            * generally superfluous. It neither seems to propagate beyond 
+            * the function scope in a way that interferes with general 
+            * optimizations at compile-time.
+            */
+
+           auto ret = (type<Coeffs...>)0.0; 
             for (const auto &coeff : coeffs | std::views::reverse) 
                ret = std::fma(ret, u, coeff);  
             
