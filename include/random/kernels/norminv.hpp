@@ -63,7 +63,7 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
     static constexpr auto tailshifti = (f64)1.6e0;
 
 
-    // -*-           coeffs. for u close to 1/2          -*-
+    // coeffs. for u close to 1/2.
     static constexpr Polynomial a(
         (f64)3.3871328727963666080e0, 
         (f64)1.3314166789178437745e2,
@@ -87,7 +87,7 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
     );
    
 
-    // -*- coeffs. for u neither close to 1/2 nor 0 or 1 -*-
+    // coeffs. for u neither close to 1/2 nor 0 or 1.
     static constexpr Polynomial c(
         (f64)1.42343711074968357734e0, 
         (f64)4.63033784615654529590e0,
@@ -111,7 +111,7 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
     );
 
    
-    // -*-        coeffs. for u very near 0 or 1         -*-
+    // coeffs. for u very near 0 or 1.
     static constexpr Polynomial e(
         (f64)6.65790464350110377720e0, 
         (f64)5.46378491116411436990e0,
