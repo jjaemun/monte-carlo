@@ -17,17 +17,53 @@ __attribute__((hot, always_inline))
 #endif
 constexpr f64 __norminv_wichura(const f64 u) noexcept {
 
-    /* ALGO. AS241 APPL. STATIST. (Wichura, 1988) 
-          VOL. 37, NO 3. */
+    /* 
+            ALGO. AS241 APPL. STATIST. (Wichura, 1988) 
+                VOL. 37, NO 3. 
 
-    const auto split1 = (f64)0.425e0; 
-    const auto split2 = (f64)5.0e0; 
+     * AS241 relies heavily in applications of rational 
+     * approximations to branch reduced (piecewise) regions.  
 
-    const auto const1 = (f64)0.180625e0; 
-    const auto const2 = (f64)1.6e0;
+     * Quantiles are branched in these regions according 
+     * to boundaries of deviations from the distribution
+     * median, i.e.,
+     
+     *        [ |deviation| <= boundary,
+     *              where deviation := u - 0.5 ].
+     
+     * And so at each region we wish to perform different
+     * corrections (scaling, shifting) in order that our
+     * rational approximation be accurate.      
+     
+     * Generally, AS241 is faster in central regions 
+     * where the cdf is nearly linear. This is reflected
+     * in that the the correction term is an affine tform 
+     * of the (small) deviation at that quantile. 
+     
+     * It is not so fast along the tails, where this time 
+     * the general function approximation follows (very 
+     * loosely) the form
+      
+     *  [ icdf(u) ~ sqrt(log(u)) if u near 0, and
+     *      icdf(u) ~ sqrt(log(1 - u)) if u near 1 ]. 
+     
+     * The correction term here is better interpreted 
+     * as a normalised measure of distance from the median
+     * in a log-scaled sense, arising from the nonlinear
+     * topology in that region of the cdf.
+     */
 
 
-    // coeffs. for u close to 1/2.
+    // deviation boundaries.
+    static constexpr auto centrbound = (f64)0.425e0;
+    static constexpr auto tailbound = (f64)5.0e0;
+
+    // correction shifts.
+    static constexpr auto centrshift = (f64)0.180625e0; 
+    static constexpr auto tailshifti = (f64)1.6e0;
+
+
+    // -*-           coeffs. for u close to 1/2          -*-
     static constexpr Polynomial a(
         (f64)3.3871328727963666080e0, 
         (f64)1.3314166789178437745e2,
@@ -38,7 +74,7 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
         (f64)3.3430575583588128105e4, 
         (f64)2.5090809287301226727e3
     );
-
+    
     static constexpr Polynomial b(
         (f64)1.0                    , 
         (f64)4.2313330701600911252e1,
@@ -49,8 +85,9 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
         (f64)2.8729085735721942674e4, 
         (f64)5.2264952788528545610e3   
     );
-    
-    // coeffs. for u neither close to 1/2 nor 0 or 1.
+   
+
+    // -*- coeffs. for u neither close to 1/2 nor 0 or 1 -*-
     static constexpr Polynomial c(
         (f64)1.42343711074968357734e0, 
         (f64)4.63033784615654529590e0,
@@ -74,7 +111,7 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
     );
 
    
-    // coeffs. for u very near 0 or 1
+    // -*-        coeffs. for u very near 0 or 1         -*-
     static constexpr Polynomial e(
         (f64)6.65790464350110377720e0, 
         (f64)5.46378491116411436990e0,
@@ -97,41 +134,60 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
         (f64)2.04426310338993978564e-15
     );
 
+
     if (u <= (f64)0.0) 
         return -std::numeric_limits<f64>::infinity();
 
     if (u >= (f64)1.0)
         return std::numeric_limits<f64>::infinity();
 
-    const auto Q = u - (f64)(1.0 / 2.0);
-    if (std::abs(Q) <= split1) {
-        const f64 R = const1 - Q * Q;
-        return Q * a(R) / b(R);
+
+    // deviation from median.
+    const auto deviation = u - (f64)(0.5);
+
+    // central region. 
+    if (std::abs(deviation) <= centrbound) {
+        const f64 correction = centrshift - 
+            deviation * deviation;
+
+        // scaling.
+        return deviation * a(correction) /
+            b(correction);
     }
 
+    // tail region.
     else {
-        f64 R{};
-        if (Q < 0.0)
-            R = std::sqrt(-std::log(u));
+        f64 correction{};
+        if (deviation < (f64)0.0)
+            correction = std::sqrt(-std::log(u));
         else 
-            R = std::sqrt(-std::log((f64)1.0 - u));
+            correction = 
+                std::sqrt(-std::log((f64)1.0 - u));
 
+        // moderate tails. 
         f64 ret{};
-        if (R < split2) {
-            R -= const2;
-            ret = c(R) / d(R);
+        if (correction < tailbound) {
+            correction -= tailshift;
+            ret = c(correction) / 
+                d(correction);
         }
 
+        // extreme tails.
         else {
-            R -= split2;
-            ret = e(R) / f(R);
+            correction -= tailbound;
+            ret = e(correction) / 
+                f(correction);
         }
-            
-        if (Q < (f64)0.0)
+       
+        // unfold.
+        if (deviation < (f64)0.0)
             return -ret;
 
         return ret;
     }
 }
+
+
+using norminv = __norminv_wichura;
 
 #endif
