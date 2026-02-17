@@ -30,7 +30,6 @@ class StratifiedSampler final : public Sampler {
             for (auto& [i, sample] : std::views::enumerate(samples))
                 sample = (i + sample) * reciprocal;
 
-
             return samples;
         }
     
