@@ -14,8 +14,8 @@ template <typename... Coeffs>
 class Polynomial {
 
     /**
-     * Constructs a polynomial of arbitrary degree and
-     * using Horner evaluation. 
+     * Constructs a polynomial of arbitrary degree using
+     * Horner evaluation. 
     */
 
     template <typename... Types>
@@ -27,8 +27,10 @@ class Polynomial {
         Polynomial(const Coeffs&... coeffs) : coeffs{ coeffs... } {}
     
         /**
-         * If available, forcing inline improves performance,
-         * although the compiler tends to do so without it. 
+         * If available, forcing inline improves performance, but is 
+         * generally superfluous. It neither seems to propagate beyond 
+         * the function scope in a way that interferes with general 
+         * optimizations at compile-time.
          */
 
         #if defined(__GNUC__) || defined(__clang__)
