@@ -35,7 +35,7 @@ class AntitheticSampler final : public Sampler {
             }
 
             if (n & 1) 
-                antithetics.push_back(dist->sample(1).front());
+                antithetics.push_back(distribution->sample(1).front());
 
             return antithetics;
         }
