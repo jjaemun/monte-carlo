@@ -13,8 +13,8 @@ class AntitheticSampler final : public Sampler {
      */
 
     public:
-        explicit AntitheticSampler(UniformDistribution *distribution) 
-            : distribution(distribution) {}
+        explicit AntitheticSampler(UniformDistribution *uniform) 
+            : uniform(uniform) {}
 
         std::vector<f64> sample(u64 n) override {
  
@@ -28,14 +28,14 @@ class AntitheticSampler final : public Sampler {
 
             const u64 half = n / (u64)2; 
 
-            const auto samples = distribution->sample(half);
+            const auto samples = uniform->sample(half);
             for (const auto &sample : samples) {
                 antithetics.push_back(sample);
                 antithetics.push_back((f64)1.0 - sample);
             }
 
             if (n & 1) 
-                antithetics.push_back(distribution->sample(1).front());
+                antithetics.push_back(uniform->sample(1).front());
 
             return antithetics;
         }
@@ -48,7 +48,7 @@ class AntitheticSampler final : public Sampler {
         * once per thread (~~rarely also synchronized across them). 
         */ 
 
-        UniformDistribution *distribution;
+        UniformDistribution *uniform;
 };
 
 #endif 
