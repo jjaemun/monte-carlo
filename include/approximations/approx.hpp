@@ -1,6 +1,7 @@
 #ifndef APPROX_HPP
 #define APPROX_HPP
 
+
 #include <array>
 #include <cmath>
 #include <type_traits>
@@ -12,6 +13,11 @@
 template <typename... Coeffs>
 class Polynomial {
 
+    /**
+     * Constructs a polynomial of arbitrary degree and
+     * using Horner evaluation. 
+    */
+
     template <typename... Types>
     using type = std::common_type_t<Types...>;
     
@@ -19,8 +25,15 @@ class Polynomial {
 
     public:
         Polynomial(const Coeffs&... coeffs) : coeffs{ coeffs... } {}
+    
+        /**
+         * If available, forcing inline improves performance,
+         * although the compiler tends to do so without it. 
+         */
 
+        #if defined(__GNUC__) || defined(__clang__)
         __attribute__((always_inline))
+        #endif
         constexpr type<Coeffs...> operator()(const type<Coeffs...> u) const noexcept {
             auto ret = (type<Coeffs...>)0.0; 
             for (const auto &coeff : coeffs | std::views::reverse) 
@@ -30,7 +43,7 @@ class Polynomial {
         }
 
     private:
-        std::array<type<Coeffs...>, pack_size<Coeffs...>> coeffs;
+        std::array<type<Coeffs...> pack_size<Coeffs...>> coeffs;
 };
 
 
