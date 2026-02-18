@@ -25,21 +25,9 @@ constexpr f64 __rlog_one(const f64 u) noexcept {
 
                   ƒ(u) =  u - log(1 + u).
      
-     * Clearly, issues arise for small u, where 
+     * Clearly, issues arise for small u, where the 
+     * linear terms cancel (catastrofic cancellation).
         
-           ƒ(u) = u - log(1 + u) 
-
-                                u^(i)    
-                = ∑   (-1)^(i) ------- , 
-                i = 2             i
-                                       
-     * since 
-            
-                            u->0
-                log(1 + u)  ≈≈≈≈    u,
-
-     * causing catastrofic cancellation. 
-
      * Now, in order that stability be preserved over
      * the problematic interval we use a minimax rational
      * approximation. This interval is an observed open 
@@ -61,19 +49,9 @@ constexpr f64 __rlog_one(const f64 u) noexcept {
      * It therefore symmetrizes the error, bounds the 
      * variable tighter, and improves conditioning. 
      * However, it induces near odd behavior and hence,
-     
-                    even = mobius * mobius
-
-     * follows.
-
-     * Beyond it, direct evaluation is stable.
-     
-     * There is no actual mention of this function in the
-     * listed source. It is provided as supplementary
-     * (fortran) code, while there are many sources that 
-     * provide C-transpiled versions of that same software 
-     * distribution. 
+     * a quadratic form follows.
      */
+
 
     // open set boundaries.
     static constexpr auto leftbound = (f64)-0.39;
@@ -119,18 +97,19 @@ constexpr f64 __rlog_one(const f64 u) noexcept {
 
     // right region.
     else if (u > symmbound) {
-        coordinate = (f64)0.75 * u - (f64)0.25;
-        correction = rightshift + h / 
+        coordinate = (f64)0.75 * u - 
+            (f64)0.25;
+        correction = rightshift + coordinate / 
             (f64)3.0; 
     }
 
     // central region.
     else {
-        h = u;
-        correction = 0.0;
+        coordinate = u;
+        correction = (f64)0.0;
     }
 
-    // transform maps to symmetrized domain.
+    // transform to symmetrized domain.
     const auto mobius = u / (u + (f64)2.0);
     const auto even = mobius * mobius;
     const auto rational = p(even) / q(even);
