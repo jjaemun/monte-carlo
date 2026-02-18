@@ -1,11 +1,10 @@
 #ifndef NORMINV_HPP 
 #define NORMINV_HPP 
 
+
 #include <cmath>
 #include <limits>
 #include <numbers>
-#include <ranges>
-
 
 #include "approximation/approx.hpp"
 #include "types.hpp"
@@ -21,8 +20,11 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
             ALGO. AS241 APPL. STATIST. (Wichura, 1988) 
                 VOL. 37, NO 3. 
 
+     * Computes the inverse cdf for the standard gaussian
+     * distribution for some probability, u. 
+
      * AS241 relies heavily in applications of rational 
-     * approximations to branch reduced (piecewise) regions.  
+     * approximations to branch reduced (piecewise) regions.
 
      * Quantiles are branched in these regions according 
      * to boundaries of deviations from the distribution
@@ -30,10 +32,10 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
      
      *        [ |deviation| <= boundary,
      *              where deviation := u - 0.5 ].
-     
+        
      * And so at each region we wish to perform different
-     * corrections (scaling, shifting) in order that our
-     * rational approximation be accurate.      
+     * corrections (scaling, shifting) in order that the
+     * rational approximation of inverses be accurate.      
      
      * Generally, AS241 is faster in central regions 
      * where the cdf is nearly linear. This is reflected
@@ -60,7 +62,7 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
 
     // correction shifts.
     static constexpr auto centrshift = (f64)0.180625e0; 
-    static constexpr auto tailshifti = (f64)1.6e0;
+    static constexpr auto tailshift = (f64)1.6e0;
 
 
     // coeffs. for u close to 1/2.
@@ -187,7 +189,5 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
     }
 }
 
-
-using norminv = __norminv_wichura;
 
 #endif
