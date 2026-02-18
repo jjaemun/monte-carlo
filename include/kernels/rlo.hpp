@@ -25,14 +25,16 @@ constexpr f64 __rlog_one(const f64 u) noexcept {
 
                   ƒ(u) =  u - log(1 + u).
      
-     * Clearly, issues arise for small u, where the 
-     * linear terms cancel (catastrofic cancellation).
+     * Issues arise for small u, where the linear terms
+     * cancel, leading to catastrofic cancellation when
+     * evaluated directly in floating point arithmetic.
         
      * Now, in order that stability be preserved over
      * the problematic interval we use a minimax rational
-     * approximation. This interval is an observed open 
-     * set where smallness of u is known to cause IEEE fp 
-     * precision errors. 
+     * approximation. This interval is a chosen (to 
+     * balance errors) open set where smallness of u is 
+     * known to cause fp ouchies (cancellation dominates
+     * fp error). 
      
      * Although the rational approximation is global on 
      * the interval, it is split into regions. Each then 
@@ -44,12 +46,17 @@ constexpr f64 __rlog_one(const f64 u) noexcept {
      * Mobius transform is used to keep the argument finite
      * as u -> -1,
      
-                    mobius = u / (u + 2).
+                      r = u / (u + 2).
 
-     * It therefore symmetrizes the error, bounds the 
-     * variable tighter, and improves conditioning. 
      * However, it induces near odd behavior and hence,
-     * a quadratic form follows.
+     * the apprximation is instead evaluated under a 
+     * quadratic form
+            
+                         t = r * r.
+       
+     * It therefore symmetrizes the error, bounds the 
+     * variable tighter, and improves conditioning, while
+     * being more efficient. 
      */
 
 
@@ -61,8 +68,8 @@ constexpr f64 __rlog_one(const f64 u) noexcept {
     static constexpr auto symmbound = (f64)0.18;
 
     // correction shifts.
-    static constexpr auto leftbias = (f64)0.566749439387324e-1;
-    static constexpr auto rightbias = (f64)0.456512608815524e-1;
+    static constexpr auto leftshift = (f64)0.566749439387324e-1;
+    static constexpr auto rightshift = (f64)0.456512608815524e-1;
 
 
     static constexpr Polynomial p(
