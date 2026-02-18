@@ -23,7 +23,7 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
      * Computes the inverse cdf for the standard gaussian
      * distribution for some probability, u. 
 
-     * AS241 relies heavily in applications of rational 
+     * AS241 relies heavily on applications of rational 
      * approximations to branch reduced (piecewise) regions.
 
      * Quantiles are branched in these regions according 
