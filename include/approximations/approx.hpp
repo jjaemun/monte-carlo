@@ -24,8 +24,10 @@ class Polynomial {
     static_assert(std::is_arithmetic_v<type<Coeffs...>>);
 
     public:
-        Polynomial(const Coeffs&... coeffs) : coeffs{ coeffs... } {}
+        constexpr Polynomial(Coeffs&&... coeffs) noexcept : 
+            coeffs{ std::forward<Coeffs>(coeffs)... } {}
 
+        [[nodiscard]]
         #if defined(__GNUC__) || defined(__clang__)
         __attribute__((always_inline))
         #endif
@@ -46,8 +48,11 @@ class Polynomial {
         }
 
     private:
-        std::array<type<Coeffs...> pack_size<Coeffs...>> coeffs;
+        std::array<type<Coeffs...>, pack_size<Coeffs...>> coeffs;
 };
 
+
+template <typename... Coeffs>
+Polynomial(Coeffs...) -> Polynomial<Coeffs...>;
 
 #endif
