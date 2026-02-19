@@ -190,4 +190,6 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
 }
 
 
+using norminv = __norminv_wichura;
+
 #endif
