@@ -127,4 +127,6 @@ constexpr f64 __rlog_one(const f64 u) noexcept {
 }
 
 
+using rlog1 = __rlog_one;
+
 #endif
