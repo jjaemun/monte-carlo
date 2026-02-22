@@ -23,7 +23,7 @@ class Gaussian : public StatisticalDistribution {
             std::vector<f64> gaussians(n);
 
             const auto uniforms = sampler.sample(n);
-            for (auto& [gaussian, uniform] : std::views::zip(gaussian, uniform) 
+            for (auto& [gaussian, uniform] : std::views::zip(gaussians, uniforms) 
                 gaussian = sigma * norminv(uniform) + mu;
             
             return gaussians;
