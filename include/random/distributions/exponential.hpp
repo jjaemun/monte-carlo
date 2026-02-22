@@ -14,8 +14,6 @@
 
 template <typename Sampler>
 class ExponentialDistribution : public StatisticalDistribution {
-
-
     public:
         explicit ExponentialDistribution(Sampler sampler, f64 lambda) 
             : sampler(std::move(sampler)), lambda(lambda) {
@@ -23,7 +21,6 @@ class ExponentialDistribution : public StatisticalDistribution {
                     ERROR("lambda must be positive.");
             }
 
-    
         std::vector<f64> sample(u64 n) override {
             std::vector<f64> exponentials(n);
 
@@ -39,7 +36,6 @@ class ExponentialDistribution : public StatisticalDistribution {
     private:
         Sampler sampler;
         f64 lambda;
-
 };
 
 

@@ -2,19 +2,15 @@
 #define GAUSSIAN_HPP
 
 
-#include <random>
+#include <vector>
 #include <ranges>
-#include <utility>
 
-
-#include "sampling/sampler.hpp"
 #include "distribution.hpp"
 #include "kernels/norminv.hpp"
 
 
 template <typename Sampler>
 class Gaussian : public StatisticalDistribution {
-
     public:
         explicit Gaussian(Sampler sampler, f64 mu, f64 sigma) 
             : sampler(std::move(sampler)), mu(mu), sigma(sigma) {}
@@ -40,7 +36,6 @@ class Gaussian : public StatisticalDistribution {
 
 class GaussianBoxMuller final {
     public:
-        
         explicit GaussianBoxMuller(f64 mu, f64 sigma) 
             : mu(mu), sigma(sigma) {}
 
