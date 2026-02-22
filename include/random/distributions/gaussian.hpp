@@ -20,22 +20,11 @@ class Gaussian : public StatisticalDistribution {
             : sampler(std::move(sampler)), mu(mu), sigma(sigma) {}
 
         std::vector<f64> sample(u64 n) override {
-            std::vector<f64> gaussians{};
-            gaussians.reserve(n);
-
-            const auto uniforms = sampler.sample(n);
-            for (const auto &uniform : uniforms) {
-                gaussians.push_back(
-                    sigma * norminv(uniform) + mu
-                );
-            }
-
             std::vector<f64> gaussians(n);
 
             const auto uniforms = sampler.sample(n);
             for (auto& [uniform, gaussian] : std::views::zip(uniforms, gaussians) 
                 gaussian = sigma * norminv(uniform) + mu;
-            
             
             return gaussians;
         }
