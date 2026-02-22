@@ -38,7 +38,7 @@ constexpr f64 __rlog_one(const f64 u) noexcept {
      
      * Although the rational approximation is global on 
      * the interval, it is split into regions. Each then 
-     * uses corrections, in the form of a small linear
+     * uses corrections, in the form of a minimax linear
      * bias to flatten relative errors. A region-local
      * affine coordinate is used to condition them.
      
