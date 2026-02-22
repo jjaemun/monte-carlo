@@ -3,35 +3,48 @@
 
 
 #include <random>
+#include <ranges>
 #include <utility>
 
+
+#include "sampling/sampler.hpp"
 #include "distribution.hpp"
-#include "icdf.hpp"
+#include "kernels/norminv.hpp"
 
 
-template <typename RandomNumberGenerator>
+template <typename Sampler>
 class Gaussian : public StatisticalDistribution {
-    
-    std::normal_distribution<f64> dist;
 
     public:
-        explicit Gaussian(RandomNumberGenerator& rng, f64 mu, f64 sigma) 
-            : rng(rng), mu(mu), sigma(sigma), dist(mu,sigma) {}
+        explicit Gaussian(Sampler sampler, f64 mu, f64 sigma) 
+            : sampler(std::move(sampler)), mu(mu), sigma(sigma) {}
 
         std::vector<f64> sample(u64 n) override {
-            std::vector<f64> samples(n);
-            for (auto &sample : samples) {
-                sample = dist(rng);
+            std::vector<f64> gaussians{};
+            gaussians.reserve(n);
+
+            const auto uniforms = sampler.sample(n);
+            for (const auto &uniform : uniforms) {
+                gaussians.push_back(
+                    sigma * norminv(uniform) + mu
+                );
             }
 
-            return samples;
+            std::vector<f64> gaussians(n);
+
+            const auto uniforms = sampler.sample(n);
+            for (auto& [uniform, gaussian] : std::views::zip(uniforms, gaussians) 
+                gaussian = sigma * norminv(uniform) + mu;
+            
+            
+            return gaussians;
         }
 
         auto mean(void) const noexcept -> f64 { return mu; }
         auto sdev(void) const noexcept -> f64 { return sigma; }
 
     private:
-        RandomNumberGenerator &rng;
+        Sampler sampler;
         f64 mu, sigma;
 };
 
