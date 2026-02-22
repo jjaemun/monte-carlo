@@ -13,9 +13,9 @@
 
 
 template <typename Sampler>
-class ExponentialDistribution : public StatisticalDistribution {
+class Exponential : public StatisticalDistribution {
     public:
-        explicit ExponentialDistribution(Sampler sampler, f64 lambda) 
+        explicit Exponential(Sampler sampler, f64 lambda) 
             : sampler(std::move(sampler)), lambda(lambda) {
                 if (lambda <= 0) 
                     ERROR("lambda must be positive.");
