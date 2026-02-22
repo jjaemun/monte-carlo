@@ -23,7 +23,7 @@ class Gaussian : public StatisticalDistribution {
             std::vector<f64> gaussians(n);
 
             const auto uniforms = sampler.sample(n);
-            for (auto& [uniform, gaussian] : std::views::zip(uniforms, gaussians) 
+            for (auto& [gaussian, uniform] : std::views::zip(gaussian, uniform) 
                 gaussian = sigma * norminv(uniform) + mu;
             
             return gaussians;
@@ -40,25 +40,27 @@ class Gaussian : public StatisticalDistribution {
 
 class GaussianBoxMuller final {
     public:
-        std::vector<f64> 
-        operator()(const std::vector<f64> &uniforms) const {
-            std::vector<f64> samples{};
-            samples.reserve(uniforms.size());
+        
+        explicit GaussianBoxMuller(f64 mu, f64 sigma) 
+            : mu(mu), sigma(sigma) {}
+
+        std::vector<f64> sample(const std::vector<f64> &uniforms) const noexcept {
+            std::vector<f64> gaussians{};
+            gaussians.reserve(uniforms.size());
 
             for (auto& pair : uniforms | std::views::chunk(2)) {
-                const auto u1 = pair.front();
-                const auto u2 = pair.back();
-
                 const auto factor = 
-                    std::sqrt((f64)-2.0 * std::log(u1));
+                    std::sqrt((f64)-2.0 * 
+                        std::log(pair.front()));
                 const auto theta = 
-                    (f64)2.0 * std::numbers::pi * u2;
+                    (f64)2.0 * std::numbers::pi * 
+                        pair.back();
 
-                samples.push_back(factor * std::cos(theta));
-                samples.push_back(factor * std::sin(theta));
+                gaussians.push_back(sigma * factor * std::cos(theta) + mu);
+                gaussians.push_back(sigma * factor * std::sin(theta) + mu);
             }
 
-            return samples;
+            return gaussians;
         }
 };
 
