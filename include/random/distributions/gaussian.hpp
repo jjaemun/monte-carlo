@@ -62,6 +62,12 @@ class GaussianBoxMuller final {
 
             return gaussians;
         }
+        
+        auto mean(void) const noexcept -> f64 { return mu; }
+        auto sdev(void) const noexcept -> f64 { return sigma; }
+
+    private:
+        f64 mu, sigma;
 };
 
 
