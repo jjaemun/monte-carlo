@@ -2,7 +2,7 @@
 #define SAMPLER_HPP
 
 
-#include "random/distribution.hpp"
+#include "random/distributions/uniform.hpp"
 
 
 class Sampler {
