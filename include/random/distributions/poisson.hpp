@@ -36,6 +36,19 @@ class PoissonKnuth final : public StatisticalDistribution {
                 static_cast<u64>(lambda);
 
             auto knuth = [=](void) const noexcept -> f64 {
+            
+                /**
+                 * To simplify matters, the inequality is evaluated in log-
+                 * space. The idea is that we compute the product of uniform
+                 * samples until 
+                
+                                u1 · ... · um <= exp(-lambda) 
+
+                 * then poisson <- m - 1. On average this requires generating
+                 * lambda + 1 uniform deviates (Knuth, 1969), so its a method 
+                 * suited for low intensity poisson processes.
+                 */
+
                 auto product = (f64)1.0;
                 auto count = (u64)0;
         
