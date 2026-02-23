@@ -35,7 +35,7 @@ class PoissonKnuth final : public StatisticalDistribution {
             const auto ssize = (u64)1 + 
                 static_cast<u64>(lambda);
 
-            auto knuth = [=](void) const noexcept -> f64 {
+            auto knuth = [&](void) const noexcept -> f64 {
             
                 /**
                  * To simplify matters, the inequality is evaluated in log-
