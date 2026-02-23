@@ -3,7 +3,7 @@
 
 
 #include <cmath>
-#include <random>
+#include <ranges>
 #include <vector>
 
 #include "distribution.hpp"
@@ -12,33 +12,8 @@
 #define ERROR(msg) (std::cerr << "error! " << msg << std::endl; std::exit(-999))
 
 
-template <typename RandomNumberGenerator>
-class Poisson : public StatisticalDistribution {
-        
-    std::poisson_distribution<u64> dist;
-
-    public:
-        explicit Poisson(RandomNumberGenerator& rng, f64 lambda) 
-            : rng(rng), lambda(lambda), dist(lambda) {}
-
-        std::vector<f64> sample(u64 n) override {
-            std::vector<f64> samples(n);
-            for (auto &sample : samples) {
-                sample = static_cast<f64>(dist(rng));
-            }
-
-            return samples;
-        }
-
-        auto intensity(void) const noexcept -> f64 { return lambda; }
-
-    private:
-        RandomNumberGenerator &rng;
-        f64 lambda;
-};
-
 template <typename Sampler>
-class PoissonKnuth final : StatisticalDistribution {
+class PoissonKnuth final : public StatisticalDistribution {
 
     /**
      * The method is in fact due to Ahrens and Dieter, although the
@@ -53,11 +28,8 @@ class PoissonKnuth final : StatisticalDistribution {
             }
         
         std::vector<f64> sample(u64 n) override {
-            std::vector<f64> poissons(n);
-
-            // *untuned* heuristic for iterate sample size.
-            const auto ssize = static_cast<u64>(lambda) + 
-                ((static_cast<u64>(lambda) + (u64)3) / (u64)3);
+            // heuristic for uniform sample size.
+            const auto ssize = static_cast<u64>(lambda) + (u64)1;
    
             // product space threshold.
             const auto threshold = std::exp(-lambda);
@@ -80,6 +52,7 @@ class PoissonKnuth final : StatisticalDistribution {
                 std::unreachable();
             };
 
+            std::vector<f64> poissons(n);
             for (auto &poisson : poissons) {
                 poisson = knuth();
             }
@@ -99,3 +72,5 @@ class PoissonKnuth final : StatisticalDistribution {
 
 
 #endif
+
+// TODO: implement Ahrens & Dieter and (normal) transform rejection.
