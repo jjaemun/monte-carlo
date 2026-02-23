@@ -5,6 +5,7 @@
 #include "sampler.hpp"
 
 
+template <typename Uniform>
 class StratifiedSampler final : public Sampler {
          
     /**
@@ -13,7 +14,7 @@ class StratifiedSampler final : public Sampler {
      */
 
     public:
-        explicit StratifiedSampler(UniformDistribution *uniform) 
+        explicit StratifiedSampler(Uniform *uniform) 
             : uniform(uniform) {}
 
         std::vector<f64> sample(u64 n) override {
@@ -40,7 +41,7 @@ class StratifiedSampler final : public Sampler {
          * usually cheap. 
         */
 
-        UniformDistribution *uniform;
+        Uniform *uniform;
 };
 
 #endif 

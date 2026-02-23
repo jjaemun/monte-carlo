@@ -4,7 +4,7 @@
 
 #include "sampler.hpp"
 
-
+template <typename Uniform>
 class AntitheticSampler final : public Sampler {
          
     /**
@@ -13,7 +13,7 @@ class AntitheticSampler final : public Sampler {
      */
 
     public:
-        explicit AntitheticSampler(UniformDistribution *uniform) 
+        explicit AntitheticSampler(Uniform *uniform) 
             : uniform(uniform) {}
 
         std::vector<f64> sample(u64 n) override {
@@ -48,7 +48,7 @@ class AntitheticSampler final : public Sampler {
         * once per thread (~~rarely also synchronized across them). 
         */ 
 
-        UniformDistribution *uniform;
+        Uniform *uniform;
 };
 
 #endif 
