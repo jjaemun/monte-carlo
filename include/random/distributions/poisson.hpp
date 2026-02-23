@@ -28,11 +28,12 @@ class PoissonKnuth final : public StatisticalDistribution {
             }
         
         std::vector<f64> sample(u64 n) override {
-            // heuristic for uniform sample size.
-            const auto ssize = static_cast<u64>(lambda) + (u64)1;
-   
             // product space threshold.
             const auto threshold = std::exp(-lambda);
+            
+            // heuristic for uniform sample size.
+            const auto ssize = (u64)1 + 
+                static_cast<u64>(lambda);
 
             auto knuth = [=](void) const noexcept -> f64 {
                 auto product = (f64)1.0;
@@ -48,7 +49,6 @@ class PoissonKnuth final : public StatisticalDistribution {
                             return static_cast<f64>(count - 1);
                     }
                 }
-                
                 std::unreachable();
             };
 
