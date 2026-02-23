@@ -9,12 +9,12 @@
 
 
 template <typename RandomBitGenerator>
-class UniformDistribution final {
+class Uniform final {
     
     std::uniform_real_distribution<f64> dist;
 
     public:
-        explicit UniformDistribution(RandomBitGenerator rng, f64 a, f64 b) 
+        explicit Uniform(RandomBitGenerator rng, f64 a, f64 b) 
             : rng(rng), a(a), b(b), dist(a, b) {}
 
         std::vector<f64> sample(u64 n) override {
