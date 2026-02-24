@@ -2,9 +2,9 @@
 #define POISSON_HPP
 
 
+#include <cstdlib>
 #include <cmath>
-#include <ranges>
-#include <vector>
+#include <iostream>
 
 #include "distribution.hpp"
 
