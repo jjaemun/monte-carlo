@@ -1,9 +1,8 @@
 #ifndef GAUSSIAN_HPP
 #define GAUSSIAN_HPP
 
-
-#include <vector>
 #include <ranges>
+#include <cmath>
 
 #include "distribution.hpp"
 #include "kernels/norminv.hpp"
