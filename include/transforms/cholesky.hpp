@@ -18,55 +18,59 @@ class CholeskyDecomposition final : public Transform {
             const u64 n = data.size();
    
             for (const auto &v : data) {
-                if (subvec.size() != n) 
+                if (v.size() != n) 
                     ERROR("matrix not square");
             }
+
+            std::vector<std::vector<f64>> decomp(n);
+            for (auto &v : decomp)
+                v.resize(n);
 
             for (auto i : std::views::iota((u64)0, n)) {
                 for (auto j : std::views::iota((u64)0, i + 1)) {
                     auto sum = (f64)0.0;
                     for (auto k : std::views::iota((u64)0, j)) 
-                        sum += data[i][k] * data[j][k];
+                        sum += decomp[i][k] * decomp[j][k];
                 
                     if (i == j) {
                         const auto diag = data[i][j] - sum;
                         if (diag <= (f64)0.0) 
                             ERROR("matrix not positive definite.");
-
-                        data[i][j] = std::sqrt(diag);
+                        
+                        decomp[i][i] = std::sqrt(diag);
                     }
-                    else 
-                        data[i][j] = (data[i][j] - sum) /
-                            data[j][j];
+                    else {
+                        decomp[i][j] = (data[i][j] - sum) /
+                            decomp[j][j];
+                    }
                 }
-
-                for (auto j : std::views::iota(i + 1, n))
-                        data[i][j] = (f64)0.0;
              }
+            
+            std::swap(data, decomp);
         }
 
         void inverse(std::vector<std::vector<f64>> &data) override {
             const u64 n = data.size();
             
-            std::vector<std::vector<f64>> reconstructed(n);
-            for (auto &v : reconstructed) 
+            std::vector<std::vector<f64>> recomp(n);
+            for (auto &v : recomp) 
                 v.resize(data.size());
 
             for (auto i : std::views::iota((u64)0, n)) {
                 for (auto j : std::views::iota((u64)0, i + 1)) {
-                    const auto min = std::min(i, j);
+                    const auto min = (u64)std::min(i, j);
 
                     auto sum = (f64)0.0;
-                    for (auto k : std::views::iota((u64)0, (u64)min)) 
+                    for (auto k : std::views::iota((u64)0, min + 1)) 
                         sum += data[i][k] * data[j][k];
                
                     // symmetric.
-                    reconstructed[i][j] = sum;
-                    reconstructed[j][i] = sum;
+                    recomp[i][j] = sum;
+                    recomp[j][i] = sum;
                 }
             }
         
-            std::swap(data, reconstructed);
+            std::swap(data, recomp);
         } 
 
 };
