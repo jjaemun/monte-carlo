@@ -2,9 +2,9 @@
 #define EXPONENTIAL_HPP
 
 
+#include <cstdlib>
 #include <cmath>
-#include <vector>
-#include <ranges>
+#include <iostream>
 
 #include "distribution.hpp"
 
