@@ -33,11 +33,11 @@ class CholeskyDecomposition final : public Transform {
                         sum += decomp[i][k] * decomp[j][k];
                 
                     if (i == j) {
-                        const auto diag = data[i][j] - sum;
+                        const auto diag = data[j][j] - sum;
                         if (diag <= (f64)0.0) 
                             ERROR("matrix not positive definite.");
                         
-                        decomp[i][i] = std::sqrt(diag);
+                        decomp[j][j] = std::sqrt(diag);
                     }
                     else {
                         decomp[i][j] = (data[i][j] - sum) /
