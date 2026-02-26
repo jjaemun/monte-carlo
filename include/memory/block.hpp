@@ -37,5 +37,4 @@ class Block {
 
 #undef constant__
 
-
 #endif
