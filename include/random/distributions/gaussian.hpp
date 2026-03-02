@@ -18,7 +18,7 @@ class Gaussian : public StatisticalDistribution {
             std::vector<f64> gaussians(n);
 
             const auto uniforms = sampler.sample(n);
-            for (auto& [gaussian, uniform] : std::views::zip(gaussians, uniforms))
+            for (auto [gaussian, uniform] : std::views::zip(gaussians, uniforms))
                 gaussian = sigma * norminv(uniform) + mu;
             
             return gaussians;
@@ -32,6 +32,13 @@ class Gaussian : public StatisticalDistribution {
         f64 mu, sigma;
 };
 
+#if defined(__cpp_lib_ranges_chunk)
+
+/**
+ * Clang does not implement std::views::chunk as of writing this.
+ * Providing a portable alternative is otherwise straightforward,
+ * but the objective is also to fully use the stl where possible.
+ */
 
 class GaussianBoxMuller final {
     public:
@@ -63,6 +70,7 @@ class GaussianBoxMuller final {
     private:
         f64 mu, sigma;
 };
+#endif
 
 
 #endif
