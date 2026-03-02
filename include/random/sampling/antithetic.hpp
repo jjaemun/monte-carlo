@@ -28,14 +28,14 @@ class AntitheticSampler final : public Sampler {
 
             const u64 half = n / (u64)2; 
 
-            const auto samples = uniform->sample(half);
+            const auto samples = uniform.sample(half);
             for (const auto &sample : samples) {
                 antithetics.push_back(sample);
                 antithetics.push_back((f64)1.0 - sample);
             }
 
             if (n & 1) 
-                antithetics.push_back(uniform->sample(1).front());
+                antithetics.push_back(uniform.sample(1).front());
 
             return antithetics;
         }

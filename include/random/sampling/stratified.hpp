@@ -27,7 +27,7 @@ class StratifiedSampler final : public Sampler {
             const f64 reciprocal = (f64)1.0 / 
                 static_cast<f64>(n); 
 
-            auto samples = uniform->sample(n);
+            auto samples = uniform.sample(n);
             for (auto& [i, sample] : std::views::enumerate(samples))
                 sample = (i + sample) * reciprocal;
 
