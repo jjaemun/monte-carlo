@@ -1,8 +1,8 @@
 #ifndef ANTITHETIC_HPP
 #define ANTITHETIC_HPP
 
-
 #include "sampler.hpp"
+
 
 template <typename Uniform>
 class AntitheticSampler final : public Sampler {
@@ -13,8 +13,8 @@ class AntitheticSampler final : public Sampler {
      */
 
     public:
-        explicit AntitheticSampler(Uniform *uniform) 
-            : uniform(uniform) {}
+        explicit AntitheticSampler(Uniform uniform) 
+            : uniform(std::move(uniform)) {}
 
         std::vector<f64> sample(u64 n) override {
  
@@ -48,7 +48,7 @@ class AntitheticSampler final : public Sampler {
         * once per thread (~~rarely also synchronized across them). 
         */ 
 
-        Uniform *uniform;
+        Uniform uniform;
 };
 
 #endif 

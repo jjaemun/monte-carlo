@@ -14,8 +14,8 @@ class StratifiedSampler final : public Sampler {
      */
 
     public:
-        explicit StratifiedSampler(Uniform *uniform) 
-            : uniform(uniform) {}
+        explicit StratifiedSampler(Uniform uniform) 
+            : uniform(std::move(uniform)) {}
 
         std::vector<f64> sample(u64 n) override {
  
@@ -41,7 +41,7 @@ class StratifiedSampler final : public Sampler {
          * usually cheap. 
         */
 
-        Uniform *uniform;
+        Uniform uniform;
 };
 
 #endif 
