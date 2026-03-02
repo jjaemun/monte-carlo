@@ -9,7 +9,7 @@
 #include "distribution.hpp"
 
 
-#define ERROR(msg) (std::cerr << "error! " << msg << std::endl; std::exit(-999))
+#define ERROR(msg) (std::cerr << "error! " << msg << std::endl)
 
 
 template <typename Sampler>
@@ -25,7 +25,7 @@ class Exponential : public StatisticalDistribution {
             std::vector<f64> exponentials(n);
 
             const auto uniforms = sampler.sample(n);
-            for (auto& [exponential, uniform] : std::views::zip(exponentials, uniforms))
+            for (auto [exponential, uniform] : std::views::zip(exponentials, uniforms))
                 exponential = -std::log(uniform) / lambda;
 
             return exponentials;
