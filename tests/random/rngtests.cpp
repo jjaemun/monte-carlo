@@ -18,7 +18,7 @@ TEST(rngtest, TrivialNonDegenerateSequence) {
     /* @test TrivialNonDegenerateSequence: trivially checks rng class
             as a non-degenerate source of entropy. */
 
-    RandomNumberGenerator rng(std::mt19937{detail::seed});
+    RandomBitGenerator<std::mt19937> rng(detail::seed);
 
     std::vector<u64> samples((u64)1e4);
     for (auto &sample : samples) {
@@ -39,8 +39,8 @@ TEST(rngtest, TrivialDeterministicallyReproducibleSequence) {
     /* @test TrivialDeterministically...: checks behavior is preserved
            accross rng objects sharing a same seed. */
 
-    RandomNumberGenerator rng1(std::mt19937{detail::seed});
-    RandomNumberGenerator rng2(std::mt19937{detail::seed});
+    RandomBitGenerator<std::mt19937> rng1(detail::seed);
+    RandomBitGenerator<std::mt19937> rng2(detail::seed);
 
     bool cmpeq = true;
     for (auto i : std::views::iota(0, 1e4)) {
@@ -56,8 +56,8 @@ TEST(rngtest, TrivialSeedDependentSequence) {
     /* @test TrivialSeedDependentSequence: trivially checks different 
             seeds yield different sequences. */
 
-    RandomNumberGenerator rng1(std::mt19937{detail::seed});
-    RandomNumberGenerator rng2(std::mt19937{detail::seed + 1});
+    RandomBitGenerator<std::mt19937> rng1(detail::seed);
+    RandomBitGenerator<std::mt19937> rng2(detail::seed + 1);
 
     bool cmpeq = false;
     for (auto i : std::views::iota(0, 1e4)) {
