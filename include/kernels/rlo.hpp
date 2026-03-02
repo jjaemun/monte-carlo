@@ -12,7 +12,7 @@
 #if defined(__GNUC__) || defined(__clang__)
 __attribute__((hot, always_inline))
 #endif
-inline f64 __rlog_one(const f64 u) noexcept {
+inline f64 rlog1(const f64 u) noexcept {
 
     /**
           ALGO. 708, TOMS (Didonato & Morris, 1992)
@@ -126,7 +126,5 @@ inline f64 __rlog_one(const f64 u) noexcept {
             rational) + correction;
 }
 
-
-using rlog1 = __rlog_one;
 
 #endif

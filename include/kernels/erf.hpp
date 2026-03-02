@@ -14,7 +14,7 @@
 #if defined(__GNUC__) || defined(__clang__)
 __attribute__((hot, always_inline))
 #endif
-inline f64 __calerf(const f64 u) noexcept {
+inline f64 calerf(const f64 u) noexcept {
 
     /* 
           Mathematics of Computation (W. J. Cody, 1969)
