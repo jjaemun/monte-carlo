@@ -14,7 +14,7 @@
 #if defined(__GNUC__) || defined(__clang__)
 __attribute__((hot, always_inline))
 #endif
-constexpr f64 __norminv_wichura(const f64 u) noexcept {
+inline f64 norminv(const f64 u) noexcept {
 
     /* 
             ALGO. AS241 APPL. STATIST. (Wichura, 1988) 
@@ -189,7 +189,5 @@ constexpr f64 __norminv_wichura(const f64 u) noexcept {
     }
 }
 
-
-using norminv = __norminv_wichura;
 
 #endif
