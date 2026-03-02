@@ -5,7 +5,7 @@
 #include <cmath>
 
 #include "generics.hpp"
-#include "random/gaussian.hpp"
+#include "random/distributions/poisson.hpp"
 
 
 class PoissonMoments : 
