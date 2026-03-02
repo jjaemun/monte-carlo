@@ -3,7 +3,7 @@
 
 
 #include "generics.hpp"
-#include "random/gaussian.hpp"
+#include "random/distributions/gaussian.hpp"
 
 
 class GaussianMoments : 
