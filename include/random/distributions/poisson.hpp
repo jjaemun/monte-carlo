@@ -9,7 +9,7 @@
 #include "distribution.hpp"
 
 
-#define ERROR(msg) (std::cerr << "error! " << msg << std::endl; std::exit(-999))
+#define ERROR(msg) (std::cerr << "error! " << msg << std::endl)
 
 
 template <typename Sampler>
@@ -35,7 +35,7 @@ class PoissonKnuth final : public StatisticalDistribution {
             const auto ssize = (u64)1 + 
                 static_cast<u64>(lambda);
 
-            auto knuth = [&](void) const noexcept -> f64 {
+            auto knuth = [&](void) noexcept -> f64 {
             
                 /**
                  * To simplify matters, the inequality is evaluated in log-
