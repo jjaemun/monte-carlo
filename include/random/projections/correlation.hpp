@@ -9,7 +9,7 @@
 #include "projection.hpp"
 
 
-#define ERROR(msg) (std::cerr << "error! " << msg << std::endl; std::exit(-999))
+#define ERROR(msg) (std::cerr << "error! " << msg << std::endl)
 
 
 class CorrelatedGaussians final : public Projection {
