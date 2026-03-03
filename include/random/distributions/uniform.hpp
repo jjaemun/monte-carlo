@@ -26,6 +26,9 @@ class Uniform final {
             return samples;
         }
 
+        auto min(void) const noexcept -> f64 { return a; }
+        auto max(void) const noexcept -> f64 { return b; }
+
     private:
         RandomBitGenerator rng;
         f64 a, b;
