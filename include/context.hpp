@@ -19,6 +19,12 @@ class Context final {
             : timesteps(timesteps), paths(paths) {}
                 
         std::vector<f64> timegrid(f64 s, f64 t) const noexcept {
+
+            /**
+             * Constructs a uniform partition, i.e., linspaced, of the
+             * interval [s, t]. Expects s < t.
+             */
+
             const auto delta = (t - s) / 
                 static_cast<f64>(timesteps);
         
