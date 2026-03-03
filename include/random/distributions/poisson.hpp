@@ -40,7 +40,7 @@ class PoissonKnuth final : public StatisticalDistribution {
                 /**
                  * To simplify matters, the inequality is evaluated in log-
                  * space. The idea is that we compute the product of uniform
-                 * samples until 
+                 * (independent) samples u1, u2, ... until 
                 
                                 u1 · ... · um <= exp(-lambda) 
 
@@ -87,3 +87,4 @@ class PoissonKnuth final : public StatisticalDistribution {
 #endif
 
 // TODO: implement Ahrens & Dieter and (normal) transform rejection.
+
