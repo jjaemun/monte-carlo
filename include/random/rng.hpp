@@ -8,6 +8,13 @@
 
 template <typename EntropySource>
 class RandomBitGenerator {
+    
+    /**
+     * Satisfies the (C++11) Uniform Random Bit Generator concept. It 
+     * is designed to tie together a local interface for custom random
+     * engines downstream, but that is not in scope curently.
+     */
+
     public:
         using result_type = typename EntropySource::result_type;
 
@@ -18,6 +25,12 @@ class RandomBitGenerator {
 
         auto operator()(void) noexcept {
             return src();
+        }
+        
+        template <typename Iterator>
+        void generate(Iterator begin, Iterator end) noexcept {
+            for (auto it = begin; it != end; ++it)
+                *it = src();
         }
 
         static constexpr auto min() noexcept { return EntropySource::min(); }
