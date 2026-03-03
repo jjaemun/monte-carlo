@@ -86,8 +86,8 @@ class GenericSampleMoments {
         auto variance(Args&&... args) {
 
             /**
-             * Returns empirical variance from pathwise 
-             * realisations over the simulation period.
+             * Returns (Bessel-corrected) empirical variance from 
+             * pathwise realisations over the simulation period.
              */
 
             return static_cast<Class&>(*this).sv(std::forward<Args>(args)...);
