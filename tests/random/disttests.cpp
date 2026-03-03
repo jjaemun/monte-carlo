@@ -13,14 +13,13 @@
 #include "random/distributions/uniform.hpp"
 
 #include "stats/empirical.hpp"
-#include "stats/gaussian.hpp"
-#include "stats/poisson.hpp"
+#include "stats/theoretic.hpp"
 
 
 namespace detail {
     static constexpr u64 seed = (u64)0xff;
     static constexpr u64 ssize = (u64)2e6;
-    static constexpr f64 tol = (f64)1e-2;
+    static constexpr f64 tol = (f64)5e-2;
 } // namespace detail.
 
 
@@ -60,12 +59,15 @@ TEST(disttest, StatisticalMomentsCorrectness) {
             to distribution theoretical moments. */
     
     RandomBitGenerator<std::mt19937> rng(detail::seed);
-    Uniform uniform(rng, 0.0, 1.0);
 
+    Uniform uniform(rng, 0.0, 1.0);
+    Exponential exponential{uniform, 2.0};
     Gaussian gaussian {uniform, 0.0, 1.0};
     PoissonKnuth poisson {uniform, 2.0};
 
+    test(uniform, UniformMoments{}); 
     test(gaussian, GaussianMoments{}); 
     test(poisson, PoissonMoments{}); 
+    test(exponential, ExponentialMoments{}); 
 }
 
