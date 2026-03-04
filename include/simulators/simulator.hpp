@@ -2,16 +2,16 @@
 #define SIMULATOR_HPP
 
 
+#include <vector>
 #include <ranges>
 
 #include "context.hpp"
-#include "types.hpp"
 
 
 class Simulator {
     public:
         virtual ~Simulator(void) = default;
-        virtual std::vector<std::vector<f64>> simulate(const Context &ctx) const = 0;
+        virtual std::vector<std::vector<f64>> simulate(f64 s, f64 t) = 0;
 };
 
 
