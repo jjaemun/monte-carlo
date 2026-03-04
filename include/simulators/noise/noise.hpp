@@ -11,6 +11,12 @@
 // ergonomics.
 template <typename Class>
 class GenericNoise {
+
+    /**
+     * Composition layer (e.g., template-free, rigid) for 
+     * stochastic noise generators.
+     */
+
     public:
       template <typename... Args>
       auto increments(Args&&... args) {
@@ -24,14 +30,5 @@ class GenericNoise {
       }
 };
 
-
-namespace defaults__ {
-    using engine = RandomBitGenerator<std::mt19937>;
-
-    using uniform = Uniform<engine>;
-    using sampler = AntitheticSampler<uniform>;
-
-    using gaussian = Gaussian<sampler>;
-}
 
 #endif
