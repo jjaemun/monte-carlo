@@ -30,19 +30,18 @@ class GeometricBrownianMotion : public Simulator {
 
             std::vector<std::vector<f64>> process(timesteps + 1);
             for (auto &timestep : process)
-                timestep.resize(paths)
+                timestep.resize(paths);
 
             // fill spot.
             std::ranges::fill(process.front(), spot);
 
             for (auto i : std::views::iota((u64)1, timesteps + 1)) {
-                const auto noises = brownian.increments(paths, timedelta);
+                const auto diffusions = brownian.increments(paths, timedelta);
 
-                for (auto [current, previous, noise] : std::views::zip(process[i], process[i - 1], noises)) {
-                    const auto diffusion = sigma * noise;
-                        
-                    current = std::exp(drift + diffusion) 
+                for (auto [current, previous, diffusion] : std::views::zip(process[i], process[i - 1], diffusions)) 
+                    current = std::exp(drift + sigma * diffusion) 
                         * previous;
+                
             }
 
             return process;
