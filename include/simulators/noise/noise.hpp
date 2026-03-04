@@ -26,7 +26,7 @@ class GenericNoise {
 
 
 namespace defaults__ {
-    using engine = RandomBitGenerator<std::mt19337>;
+    using engine = RandomBitGenerator<std::mt19937>;
 
     using uniform = Uniform<engine>;
     using sampler = AntitheticSampler<uniform>;
