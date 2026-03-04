@@ -1,17 +1,12 @@
-#ifndef CONTEXT_HPP
-#define CONTEXT_HPP
+#ifndef DISCRETIZATION_HPP
+#define DISCRETIZATION_HPP
+
 
 #include <ranges>
 #include <vector>
 
 #include "types.hpp"
 
-
-struct Context {
-    u64 timesteps;
-    u64 paths;
-}; 
- 
 
 inline auto timegrid(f64 s, f64 t, f64 delta, u64 timesteps) {
 
