@@ -14,8 +14,9 @@ template <typename... Coeffs>
 class Polynomial {
 
     /**
-     * Constructs a polynomial of arbitrary degree using
-     * Horner evaluation. 
+     * Constructs a polynomial of arbitrary degree (pack_size<Coeffs...> - 1)
+     * with Horner evaluation. Uses a variadic pack of coefficients to resolve
+     * implicitly array size at compile time.
     */
 
     template <typename... Types>
@@ -29,16 +30,21 @@ class Polynomial {
 
         [[nodiscard]]
         #if defined(__GNUC__) || defined(__clang__)
+
+            /**
+             * If available, forcing inline improves performance, but is
+             * generally superfluous.
+             */
+
         __attribute__((always_inline))
         #endif
         constexpr type<Coeffs...> operator()(const type<Coeffs...> u) const noexcept {
      
             /**
-            * If available, forcing inline improves performance, but is 
-            * generally superfluous. It neither seems to propagate beyond 
-            * the function scope in a way that interferes with general 
-            * optimizations at compile-time.
-            */
+             * std::fma is chosen to reduce rounding errors. The performance hit
+             * of stl machinery is considerable in this case. std::views::reverse
+             * is opaque and prevents aggresive loop unrolling.
+             */
 
            auto ret = (type<Coeffs...>)0.0; 
             for (const auto &coeff : coeffs | std::views::reverse) 
