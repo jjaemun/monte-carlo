@@ -5,6 +5,14 @@
 #include "sampler.hpp"
 
 
+#if defined(__cpp_lib_ranges_enumerate)
+
+/**
+ * Clang does not implement std::views::enum as of writing this.
+ * Providing a portable alternative is otherwise straightforward,
+ * but the objective is also to fully use the stl where possible.
+ */
+
 template <typename Uniform>
 class StratifiedSampler final : public Sampler {
          
@@ -43,5 +51,7 @@ class StratifiedSampler final : public Sampler {
 
         Uniform uniform;
 };
+#endif 
+
 
 #endif 
