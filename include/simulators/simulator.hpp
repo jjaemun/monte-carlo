@@ -5,8 +5,6 @@
 #include <vector>
 #include <ranges>
 
-#include "context.hpp"
-
 
 class Simulator {
     public:
