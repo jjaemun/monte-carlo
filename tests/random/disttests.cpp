@@ -1,16 +1,11 @@
 #include <gtest/gtest.h>
 
-#include <iostream>
+
 #include <random>
 #include <ranges>
 #include <vector>
 
-#include "random/rng.hpp"
-
-#include "random/distributions/exponential.hpp"
-#include "random/distributions/gaussian.hpp"
-#include "random/distributions/poisson.hpp"
-#include "random/distributions/uniform.hpp"
+#include "random/prelude.hpp"
 
 #include "stats/empirical.hpp"
 #include "stats/theoretic.hpp"
