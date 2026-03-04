@@ -10,9 +10,9 @@
 
 
 namespace {
-    static defaults__::engine engine(0);
-    static defaults__::uniform uniform(engine, 0.0, 1.0);
-    static defaults__::sampler sampler(uniform);
+    default__::engine engine(0);
+    default__::uniform uniform(engine, 0.0, 1.0);
+    default__::sampler sampler(uniform);
 }
 
 
@@ -36,11 +36,11 @@ class BrownianProcess : public GenericNoise<BrownianProcess> {
         }
 
     private:
-        static defaults__::gaussian gauss;
+        static default__::gaussian gauss;
 }; 
 
 
-defaults__::gaussian BrownianProcess::gauss(sampler, 0.0, 1.0);
+default__::gaussian BrownianProcess::gauss(sampler, 0.0, 1.0);
 
 
 #endif
