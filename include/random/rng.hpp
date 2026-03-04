@@ -33,6 +33,10 @@ class RandomBitGenerator {
                 *it = src();
         }
 
+        void seed(u64 seed) noexcept {
+            src.seed(seed);
+        }
+
         static constexpr auto min() noexcept { return EntropySource::min(); }
         static constexpr auto max() noexcept { return EntropySource::max(); }
 
