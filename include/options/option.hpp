@@ -17,7 +17,7 @@ enum class option_type {
 class Option {
     public:
         virtual ~Option(void) = default;
-        virtual payoff(std::vector<std::vector<f64>> &process) const noexcept = 0;
+        virtual f64 payoff(const std::vector<std::vector<f64>> &process) const noexcept = 0;
 };
 
 #endif 
