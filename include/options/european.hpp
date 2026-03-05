@@ -14,7 +14,6 @@ class EuropeanOption : public Option {
             : strike(strike), tenor(tenor), type(type) {}
             
         f64 payoff(const std::vector<std::vector<f64>> &process) const noexcept override {
-            // european options use ending period underlying prices.
             const auto &prices = process.back();
 
             auto sum = (f64)0.0;
