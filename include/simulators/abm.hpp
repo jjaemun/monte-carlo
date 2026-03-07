@@ -16,11 +16,11 @@ class ArithmeticBrownianMotion : public Simulator {
      * measure. Uses exact discretization. Noise is accordingly Brownian.
      */
 
-    BrownianProcess brownian;
+     BrownianProcess<Ret<decltype(make_gaussian), u64>> brownian;
 
     public:
-        explicit ArithmeticBrownianMotion(u64 timesteps, u64 paths, f64 spot, f64 mu, f64 sigma) 
-                : timesteps(timesteps), paths(paths), spot(spot), mu(mu), sigma(sigma) {}
+        explicit ArithmeticBrownianMotion(u64 timesteps, u64 paths, f64 spot, f64 mu, f64 sigma, u64 seed = 0) 
+                : timesteps(timesteps), paths(paths), spot(spot), mu(mu), sigma(sigma), brownian(make_gaussian(seed)) {}
 
         std::vector<std::vector<f64>> simulate(f64 s, f64 t) override {
             const auto timedelta = (t - s) / 

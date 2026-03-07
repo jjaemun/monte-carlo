@@ -6,18 +6,12 @@
 #include <ranges>
 #include <vector>
 
+#include "factory.hpp"
 #include "noise.hpp"
 
 
-namespace {
-    default__::engine engine(0);
-    default__::uniform uniform(engine, 0.0, 1.0);
-    default__::sampler sampler(uniform);
-    default__::gaussian gauss(sampler, 0.0, 1.0);
-}
-
-
-class BrownianProcess : public GenericNoise<BrownianProcess> {
+template <typename Gaussian>
+class BrownianProcess : public GenericNoise<BrownianProcess<Gaussian>> {
     
     /**
      * The dynamics of Brownian motion are fully described by means of
@@ -26,6 +20,9 @@ class BrownianProcess : public GenericNoise<BrownianProcess> {
      */
     
     public:
+        explicit BrownianProcess(Gaussian gauss)
+            : gauss(std::move(gauss)) {}
+
         auto fwd(u64 n, f64 timedelta) noexcept {
             std::vector<f64> increments(n);
 
@@ -35,6 +32,9 @@ class BrownianProcess : public GenericNoise<BrownianProcess> {
             
             return increments;
         }
+
+    private:
+        Gaussian gauss;
 }; 
 
 
