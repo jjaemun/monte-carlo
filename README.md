@@ -1,12 +1,12 @@
 # monte-carlo!
 
-`monte-carlo` is `in progress...`. 
+`monte-carlo` is `in progress...`. Currently, I am reading on `concurrency` to continue
+with development. 
 
 ## Overview 
 
 `monte-carlo` develops an options pricing library in `c++`. The framework follows from 
 the general valuation formula under a frictionless security market with continuous trading.
-
 
 ## Objectives
 
