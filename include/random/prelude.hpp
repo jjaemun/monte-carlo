@@ -15,7 +15,7 @@ namespace default__ {
     using uniform  = Uniform<engine>;
     using sampler  = AntitheticSampler<uniform>;
     using gaussian = Gaussian<sampler>;
-    using poisson  = Poisson<uniform>;
+    using poisson  = PoissonKnuth<uniform>;
 }
 
 #endif
