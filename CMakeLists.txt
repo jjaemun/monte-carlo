@@ -12,7 +12,8 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-option(ENABLE_TEST_BUILDS "Enable building tests." OFF)
+
+option(ENABLE_TEST_BUILDS "Enabling tests builds." OFF)
 
 if(ENABLE_TEST_BUILDS) 
     enable_testing()
@@ -20,3 +21,8 @@ if(ENABLE_TEST_BUILDS)
 endif()
 
 
+option(ENABLE_PLOT_BUILDS "Enable plot builds." OFF)
+
+if(ENABLE_PLOT_BUILDS) 
+    add_subdirectory(plots)
+endif()
