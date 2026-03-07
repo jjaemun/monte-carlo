@@ -5,6 +5,9 @@
 #include <vector>
 #include <ranges>
 
+#include "discretization.hpp"
+#include "types.hpp"
+
 
 class Simulator {
     public:

@@ -1,5 +1,5 @@
-#ifndef BROWNIAN_HPP
-#define BROWNIAN_HPP
+#ifndef BROWNIAN_NOISE_HPP
+#define BROWNIAN_NOISE_HPP
 
 #include <cmath>
 #include <random>
@@ -13,6 +13,7 @@ namespace {
     default__::engine engine(0);
     default__::uniform uniform(engine, 0.0, 1.0);
     default__::sampler sampler(uniform);
+    default__::gaussian gauss(sampler, 0.0, 1.0);
 }
 
 
@@ -34,13 +35,8 @@ class BrownianProcess : public GenericNoise<BrownianProcess> {
             
             return increments;
         }
-
-    private:
-        static default__::gaussian gauss;
 }; 
 
-
-default__::gaussian BrownianProcess::gauss(sampler, 0.0, 1.0);
 
 
 #endif
