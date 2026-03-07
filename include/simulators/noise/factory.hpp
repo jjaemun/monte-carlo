@@ -42,4 +42,36 @@ inline auto make_gaussians(u64 threads, u64 seed) {
 }
 
 
+[[nodiscard]]
+inline auto make_poisson(u64 seed, f64 lambda) {
+
+    /**
+     * Creates a poisson distribution object with intensity
+     * lambda. 
+     */
+
+    default__::engine eng(seed);
+    default__::uniform uform(eng, 0.0, 1.0);
+
+    return default__::poisson(uform, lambda);
+}
+
+
+inline auto make_poissons(u64 threads, u64 seed, f64 lambda) {
+
+    /**
+     * Threading-ready factory counterpart.
+     */
+
+    std::vector<Ret<decltype(make_poisson), u64, f64>> poissons{};
+    poissons.reserve(threads);
+
+    for (auto i : std::views::iota((u64)0, threads))
+         poissons.emplace_back(make_poisson(seed + i, lambda));
+
+    return poissons;
+}
+    
+
+
 #endif

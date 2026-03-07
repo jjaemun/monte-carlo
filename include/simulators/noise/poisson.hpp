@@ -9,39 +9,36 @@
 #include "noise.hpp"
 
 
-
-class PoissonProcess : public GenericNoise<PoissonProcess> {
+template <typename Poisson>
+class PoissonProcess : public GenericNoise<PoissonProcess<Poisson>> {
     
     /**
-     * It is not so straightforward to scale poisson processes, in the
-     * same way that gaussians form a closed set under affine tformss.
+     * It is not so straightforward to scale poisson processes, in the same
+     * way that gaussians form a closed set under affine tformss.
      */
-  
-    private:
-
-        /**
-         * Notice that default poisson is Knuth (Ahrens & Dieter), which 
-         * requires that random uniforms be independent. Variance reduction
-         * methods pollute independence and so they are unsuitable here.
-         */
-    
-        static default__::engine engine;
-        static default__::uniform uniform;
 
     public:
-        explicit PoissonProcess(f64 lambda) : lambda(lambda) {}
+        explicit PoissonProcess(u64 seed, f64 lambda) : lambda(lambda), seed(seed)) {}
         
         auto fwd(u64 n, f64 timedelta) noexcept {
-            return  default__::poisson(uniform, lambda * timedelta).sample(n);
+ 
+            /**
+             * Notice that default poisson is Knuth (or Ahrens & Dieter), which
+             * requires that random uniforms be independent. Variance reduction
+             * methods pollute independence and so they are unsuitable here.
+             */
+
+            return make_poisson(seed, lambda * timedelta).sample(n);
         }
 
     private:
+        u64 seed;
         f64 lambda;
 }; 
 
 
-default__::engine PoissonProcess::engine(0);
-default__::uniform PoissonProcess::uniform(engine, 0.0, 1.0);
-
-
 #endif
+
+
+// issues! reconstructing engine from seed at every call, it generates
+// the same sequence. Store uniform to preserve sequence advancements?
