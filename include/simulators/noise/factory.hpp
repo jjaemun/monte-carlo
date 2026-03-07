@@ -57,6 +57,7 @@ inline auto make_poisson(u64 seed, f64 lambda) {
 }
 
 
+[[nodiscard]]
 inline auto make_poissons(u64 threads, u64 seed, f64 lambda) {
 
     /**
