@@ -13,8 +13,8 @@ template <typename Poisson>
 class PoissonProcess : public GenericNoise<PoissonProcess<Poisson>> {
     
     /**
-     * It is not so straightforward to scale poisson processes, in the same
-     * way that gaussians form a closed set under affine tformss.
+     * It is not so straightforward to scale poisson processes, in the same way
+     * that gaussians form a closed set under affine tformss.
      */
 
     public:
@@ -40,5 +40,5 @@ class PoissonProcess : public GenericNoise<PoissonProcess<Poisson>> {
 #endif
 
 
-// issues! reconstructing engine from seed at every call, it generates
+// issues! reconstructing engine from seed at every call* it generates
 // the same sequence. Store uniform to preserve sequence advancements?
