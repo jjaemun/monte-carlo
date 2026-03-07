@@ -23,15 +23,9 @@ template <typename... Transforms>
 class Composite final : public Transform {
 
     /**
-     * Composite transform for multiprocesses. Transformations 
-     * are assumed to be bijective, i.e., the inverse mapping 
-     * exists and is well defined such that 
-
-     *              Tform.inverse(Tfomr.forward(·))
-
-     * forms an identity function for each Tform in the pipeline. 
-     * They are not assumed to be commutative, hence we traverse
-     * the pipeline in reverse when applying such inverses.
+     * Composite transform pipeline for multiprocesses. Tforms
+     * are assumed to be bijective but not commutative, hence we
+     * traverse the pipeline in reverse when applying inverses. 
      */
     
     static_assert((std::is_base_of_v<Transform, Transforms> && ...));
