@@ -10,12 +10,20 @@
 #include "distributions/prelude.hpp"
 
 
-namespace default__ {
+namespace defaults {
+    
+    /**
+     * ergonomics! ideally, a centralised api with the available
+     * features provides benchmarke-optimal configurations for 
+     * each isolated organ in the random number generation layer.
+     */
+
     using engine   = RandomBitGenerator<std::mt19937>;
     using uniform  = Uniform<engine>;
     using sampler  = AntitheticSampler<uniform>;
     using gaussian = Gaussian<sampler>;
     using poisson  = PoissonKnuth<uniform>;
-}
+
+} // namespace defaults.
 
 #endif
