@@ -10,6 +10,37 @@
 
 
 [[nodiscard]]
+inline auto make_uniform(u64 seed) {
+        
+    /**
+     * Creates a standard (continuous) uniform distribution
+     * object. 
+     */
+        
+    defaults::engine eng(seed);
+    
+    return defaults::uniform(eng, 0.0, 1.0);
+}
+
+
+[[nodiscard]]
+inline auto make_uniforms(u64 threads, u64 seed) {
+
+    /**
+     * Threading-ready factory counterpart.
+     */
+
+    std::vector<Ret<decltype(make_uniform), u64>> uniforms{};
+    uniforms.reserve(threads);
+
+    for (auto i : std::views::iota((u64)0, threads))
+         uniforms.emplace_back(make_uniform(seed + i));
+
+    return uniforms;
+}
+
+
+[[nodiscard]]
 inline auto make_gaussian(u64 seed) {
         
     /**
