@@ -19,7 +19,7 @@ class PoissonProcess : public GenericNoise<PoissonProcess<Uniform>> {
      */
 
     public:
-        explicit PoissonProcess(f64 lambda, f64 seed) 
+        explicit PoissonProcess(f64 lambda, u64 seed) 
             : lambda(lambda), uniform(make_uniform(seed)) {}
         
         auto fwd(u64 n, f64 timedelta) noexcept {
