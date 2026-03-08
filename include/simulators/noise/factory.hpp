@@ -6,7 +6,6 @@
 #include <ranges>
 
 #include "random/prelude.hpp"
-#include "utilities.hpp"
 
 
 [[nodiscard]]
@@ -30,7 +29,7 @@ inline auto make_uniforms(u64 threads, u64 seed) {
      * Threading-ready factory counterpart.
      */
 
-    std::vector<Ret<decltype(make_uniform), u64>> uniforms{};
+    std::vector<defaults::uniform> uniforms{};
     uniforms.reserve(threads);
 
     for (auto i : std::views::iota((u64)0, threads))
@@ -63,7 +62,7 @@ inline auto make_gaussians(u64 threads, u64 seed) {
      * Threading-ready factory counterpart.
      */
 
-    std::vector<Ret<decltype(make_gaussian), u64>> gaussians{};
+    std::vector<defaults::gaussian> gaussians{};
     gaussians.reserve(threads);
 
     for (auto i : std::views::iota((u64)0, threads))
@@ -95,7 +94,7 @@ inline auto make_poissons(u64 threads, u64 seed, f64 lambda) {
      * Threading-ready factory counterpart.
      */
 
-    std::vector<Ret<decltype(make_poisson), u64, f64>> poissons{};
+    std::vector<defaults::poisson> poissons{};
     poissons.reserve(threads);
 
     for (auto i : std::views::iota((u64)0, threads))
