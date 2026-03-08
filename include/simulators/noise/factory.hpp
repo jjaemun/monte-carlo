@@ -17,11 +17,11 @@ inline auto make_gaussian(u64 seed) {
      * object. 
      */
         
-    default__::engine eng(seed);
-    default__::uniform uform(eng, 0.0, 1.0);
-    default__::sampler smp(uform);
+    defaults::engine eng(seed);
+    defaults::uniform uform(eng, 0.0, 1.0);
+    defaults::sampler smp(uform);
 
-    return default__::gaussian(smp, 0.0, 1.0);
+    return defaults::gaussian(smp, 0.0, 1.0);
 }
 
 
@@ -50,10 +50,10 @@ inline auto make_poisson(u64 seed, f64 lambda) {
      * lambda. 
      */
 
-    default__::engine eng(seed);
-    default__::uniform uform(eng, 0.0, 1.0);
+    defaults::engine eng(seed);
+    defaults::uniform uform(eng, 0.0, 1.0);
 
-    return default__::poisson(uform, lambda);
+    return defaults::poisson(uform, lambda);
 }
 
 
