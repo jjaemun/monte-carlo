@@ -6,11 +6,12 @@
 #include <ranges>
 #include <vector>
 
+#include "factory.hpp"
 #include "noise.hpp"
 
 
-template <typename Poisson>
-class PoissonProcess : public GenericNoise<PoissonProcess<Poisson>> {
+template <typename Uniform>
+class PoissonProcess : public GenericNoise<PoissonProcess<Uniform>> {
     
     /**
      * It is not so straightforward to scale poisson processes, in the same way
@@ -18,7 +19,8 @@ class PoissonProcess : public GenericNoise<PoissonProcess<Poisson>> {
      */
 
     public:
-        explicit PoissonProcess(u64 seed, f64 lambda) : lambda(lambda), seed(seed)) {}
+        explicit PoissonProcess(f64 lambda, f64 seed) 
+            : lambda(lambda), uniform(make_uniform(seed)) {}
         
         auto fwd(u64 n, f64 timedelta) noexcept {
  
@@ -28,12 +30,12 @@ class PoissonProcess : public GenericNoise<PoissonProcess<Poisson>> {
              * methods pollute independence, and so they are unsuitable here.
              */
 
-            return make_poisson(seed, lambda * timedelta).sample(n);
+            return defaults::poisson(uniform, lambda * timedelta).sample(n);
         }
 
     private:
-        u64 seed;
         f64 lambda;
+        Uniform uniform;
 }; 
 
 
