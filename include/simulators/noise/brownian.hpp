@@ -10,8 +10,7 @@
 #include "noise.hpp"
 
 
-template <typename Gaussian>
-class BrownianProcess : public GenericNoise<BrownianProcess<Gaussian>> {
+class BrownianProcess : public GenericNoise<BrownianProcess> {
     
     /**
      * The dynamics of Brownian motion are fully described by means of
@@ -20,8 +19,7 @@ class BrownianProcess : public GenericNoise<BrownianProcess<Gaussian>> {
      */
     
     public:
-        explicit BrownianProcess(Gaussian gauss)
-            : gauss(std::move(gauss)) {}
+        explicit BrownianProcess(u64 seed) : gauss(make_gaussian(seed)) {}
 
         auto fwd(u64 n, f64 timedelta) noexcept {
             std::vector<f64> increments(n);
@@ -34,7 +32,7 @@ class BrownianProcess : public GenericNoise<BrownianProcess<Gaussian>> {
         }
 
     private:
-        Gaussian gauss;
+        defaults::gaussian gauss;
 }; 
 
 
