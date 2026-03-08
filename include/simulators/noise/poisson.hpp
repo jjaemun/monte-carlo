@@ -23,9 +23,9 @@ class PoissonProcess : public GenericNoise<PoissonProcess<Poisson>> {
         auto fwd(u64 n, f64 timedelta) noexcept {
  
             /**
-             * Notice that default poisson is Knuth (or Ahrens & Dieter), which
+             * Notice that default poisson is Knuth (Ahrens & Dieter), which
              * requires that random uniforms be independent. Variance reduction
-             * methods pollute independence and so they are unsuitable here.
+             * methods pollute independence, and so they are unsuitable here.
              */
 
             return make_poisson(seed, lambda * timedelta).sample(n);
