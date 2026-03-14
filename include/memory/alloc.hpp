@@ -1,45 +1,39 @@
 #pragma once
 
 
-#include <array>
-#include <expected>
-
 #include "block.hpp"
+#include "errors.hpp"
+#include "utilities.hpp"
 
 
-enum class allocation_error {
-    overwrite,
-    overflow,
-    invalid_free,
-};
-
-
-template <u64 size, u64 alignment__ = alignof(std::max_align_t)>
-class alignas(alignment__) mmalloc final {
-    public:
-        std::expected<mmblock, allocation_error> allocate(u64 bytes) {
-            if (allocated)
-                return std::unexpected(allocation_error::overwrite);
-
-            if (bytes > size)
-                return std::unexpected(allocation_error::overflow);
-                
-            allocated = true;
-            return mmblock {
-                .addr = buffer.data(),
-                .size = size
-            };
-        }
+namespace mem {
+    template <u64 size, u64 alignment = alignof(std::max_align_t)>
+    class alignas(alignment) Allocator final {
+        public:
+            std::expected<Block, err::mem> allocate(u64 bytes) noexcept {
+                if (allocated)
+                    return unex(err::mem::live);
+    
+                if (bytes > size)
+                    return unex(err::mem::overflow);
+                    
+                allocated = true;
+                return Block {
+                    buffer.data(),
+                    bytes
+                };
+            }
         
-        std::expected<void, allocation_error> deallocate(std::byte *addr) {
-            if (addr != buffer.data())
-                return std::unexpected(allocation_error::invalid_free);
+            std::expected<void, err::mem> deallocate(const Block &block) noexcept {
+                if (block.addr != buffer.data())
+                    return unex(err::mem::corruption);
+    
+                allocated = false;
+                return {};
+            }
 
-            allocated = false;
-            return {};
-        }
-
-    private:
-        bool allocated = false;
-        std::array<std::byte, size> buffer;
-};
+        private:
+            bool allocated = false;
+            std::array<std::byte, size> buffer;
+    };
+} //namespace mem.
