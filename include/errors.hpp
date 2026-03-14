@@ -5,10 +5,9 @@
 #include <utility>
 
 
+// error codes!
 namespace err {
 
-
-    // error codes.
     enum class mem {
         enomem,
         overwrite,
@@ -16,8 +15,7 @@ namespace err {
         corruption
     };
 
-    
-} // namespace err
+} // namespace err.
 
 
 // descriptors! 
