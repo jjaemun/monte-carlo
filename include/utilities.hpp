@@ -9,7 +9,7 @@ template <typename... Types>
 constexpr auto pack_size = sizeof...(Types);
 
   /**
-   * Return length of variadic pack. 
+   * Returns the length of variadic pack. 
   */
 
 
