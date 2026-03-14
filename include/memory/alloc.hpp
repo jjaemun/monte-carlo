@@ -3,7 +3,6 @@
 
 #include "block.hpp"
 #include "errors.hpp"
-#include "utilities.hpp"
 
 
 namespace mem {
@@ -12,10 +11,10 @@ namespace mem {
         public:
             std::expected<Block, err::mem> allocate(u64 bytes) noexcept {
                 if (allocated)
-                    return unex(err::mem::live);
+                    return std::unexpected(err::mem::live);
     
                 if (bytes > size)
-                    return unex(err::mem::overflow);
+                    return std::unexpected(err::mem::overflow);
                     
                 allocated = true;
                 return Block {
@@ -26,7 +25,7 @@ namespace mem {
         
             std::expected<void, err::mem> deallocate(const Block &block) noexcept {
                 if (block.addr != buffer.data())
-                    return unex(err::mem::corruption);
+                    return std::unexpected(err::mem::corruption);
     
                 allocated = false;
                 return {};
