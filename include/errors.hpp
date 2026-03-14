@@ -5,14 +5,15 @@
 #include <utility>
 
 
-// error codes!
+// codes!
 namespace err {
 
     enum class mem {
         enomem,
         overwrite,
         overflow,
-        corruption
+        corruption,
+        live
     };
 
 } // namespace err.
@@ -40,7 +41,7 @@ inline std::string_view err_to_str(err::mem code) noexcept {
 
         case (err::mem::overwrite):
             return R"(
-                Attempted borrow with write permissions on allocated buffer.
+                Attempted hijack with write permissions non-owned buffer.
             )";
 
         case (err::mem::overflow):
@@ -50,7 +51,12 @@ inline std::string_view err_to_str(err::mem code) noexcept {
 
         case (err::mem::corruption):
             return R"(
-                Illegal address on free attempt.
+                Cannot manipulate illegal address.
+            )";
+
+        case (err::mem::live):
+            return R"(
+                Cannot reallocate live buffer.
             )";
 
         default:
