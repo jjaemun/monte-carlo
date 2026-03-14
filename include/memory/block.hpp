@@ -1,13 +1,13 @@
 #pragma once
 
 
-#include <cstddef>
-
 #include "types.hpp"
 
 
-struct mmblock {
-    std::byte *addr;
-    u64 size;
-};
+namespace mem {
+    struct Block {
+        std::byte *addr;
+        u64 size;
+    };
+} // namespace mem.
     
